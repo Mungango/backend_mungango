@@ -1,20 +1,44 @@
+import createUsersService from "../services/users/createUsers.service.js";
+import deleteUsersService from "../services/users/deleteUsers.service.js";
+import getAllUsersService from "../services/users/getAllUsers.service.js";
+import getUsersService from "../services/users/getUsers.service.js";
+import updateUsersService from "../services/users/updateUsers.service.js";
+
 const getUsersController = async (req, res) => {
-	return res.status(200).json("Rota get users");
+	const id = req.params.id
+
+	const retrivedUser = await getUsersService(id)
+
+	return res.status(200).json(retrivedUser);
 };
 
 const getAllUsersController = async (req, res) => {
-	return res.status(200).json("Rota get um unico user");
+	const allUsers = await getAllUsersService()
+
+	return res.status(200).json(allUsers);
 };
 
 const createUsersController = async (req, res) => {
-	return res.status(201).json("Rota post user");
+	const payload = req.body;
+
+	const createdUser = await createUsersService(payload);
+
+	return res.status(201).json(createdUser);
 };
 
 const updateUsersController = async (req, res) => {
-	return res.status(200).json("Update user");
+	const payload = req.body
+
+	const updatedUser = await updateUsersService(payload)
+
+	return res.status(200).json(updatedUser);
 };
 
 const deleteUsersController = async (req, res) => {
+	const id = req.params.id
+
+	await deleteUsersService(id)
+
 	return res.status(204).send();
 };
 

@@ -1,6 +1,6 @@
 import { DataTypes } from "sequelize";
 
-import db from "../db/connect";
+import db from "../db/connect.js";
 
 const User = db.define("User", {
   name: {
@@ -10,7 +10,7 @@ const User = db.define("User", {
       len: [3, 255], // mínimo de 3 caracteres, máximo de 50 caracteres
     },
   },
-  telefone: {
+  phone: {
     type: DataTypes.STRING(11),
     allowNull: false,
   },
@@ -23,7 +23,7 @@ const User = db.define("User", {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  deleted_at: {
+  deletedAt: {
     type: DataTypes.DATE,
     allowNull: true, // Permitir valor nulo
     defaultValue: null, // Valor padrão é null
