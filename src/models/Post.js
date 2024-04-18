@@ -1,8 +1,8 @@
 import { DataTypes } from "sequelize";
 
-import db from "../db/connect";
+import db from "../db/connect.js";
 
-import User from "./User";
+import User from "./User.js";
 
 // Definindo a tabela de post
 
