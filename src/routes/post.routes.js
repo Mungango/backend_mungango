@@ -1,23 +1,37 @@
 import { Router } from "express";
 
 import {
-  createPostsController,
-  deletePostsController,
-  getAllPostsController,
-  getPostsController,
-  updatePostsController,
+	createPostsController,
+	deletePostsController,
+	getAllPostsController,
+	getPostsController,
+	updatePostsController,
 } from "../controllers/post.controllers.js";
+import ensureExistsMiddleware from "../middlewares/ensureExists.middleware.js";
+import Post from "../models/Post.js";
 
 const postRoutes = Router();
 
 postRoutes.get("", getAllPostsController);
 
-postRoutes.get("/:id", getPostsController);
+postRoutes.get(
+	"/:id",
+	ensureExistsMiddleware(Post, "Post"),
+	getPostsController
+);
 
 postRoutes.post("", createPostsController);
 
-postRoutes.patch("/:id", updatePostsController);
+postRoutes.patch(
+	"/:id",
+	ensureExistsMiddleware(Post, "Post"),
+	updatePostsController
+);
 
-postRoutes.delete("/:id", deletePostsController);
+postRoutes.delete(
+	"/:id",
+	ensureExistsMiddleware(Post, "Post"),
+	deletePostsController
+);
 
 export default postRoutes;
