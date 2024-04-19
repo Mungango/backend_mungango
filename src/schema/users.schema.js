@@ -6,9 +6,9 @@ const usersSchema = z.object({
     phone: z.string().max(11),
 	email: z.string().email().max(55),
 	password: z.string().min(6).max(120),
-	createdAt: z.string(),
-	updatedAt: z.string(),
-	deletedAt: z.string().nullable(),
+	createdAt: z.date(),
+	updatedAt: z.date(),
+	deletedAt: z.date().nullable(),
 });
 
 const usersWithoutPassSchema = usersSchema.omit({ password: true });
@@ -20,7 +20,7 @@ const usersCreateSchema = usersSchema.omit({
 	deletedAt: true,
 });
 
-const usersUpdateSchema = usersWithoutPassSchema.partial();
+const usersUpdateSchema = usersCreateSchema.partial();
 
 export {
 	usersSchema,
