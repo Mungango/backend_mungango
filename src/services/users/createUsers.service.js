@@ -6,11 +6,11 @@ const createUsersService = async (payload) => {
 
 	if (checkEmail){
 		throw new AppError("Email já existe", 409)
-	}
+  }
 
-	const createUser = await User.create(payload);
+  const createUser = await User.create(payload);
 
-	return createUser;
+  return createUser;
 };
 
 export default createUsersService;
