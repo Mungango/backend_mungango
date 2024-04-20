@@ -1,6 +1,4 @@
-import dotenv from "dotenv";
-
-dotenv.config();
+import "dotenv/config";
 
 const dbHost = process.env.PGHOST;
 const dbName = process.env.PGDATABASE;

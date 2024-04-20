@@ -1,16 +1,16 @@
 import { compare } from "bcrypt";
 import User from "../../models/User.js";
-import { usersWithoutPassSchema } from "../../schema/users.schema.js";
+import { usersWithoutPassSchema } from "../../schemas/users.schema.js";
 import { AppError } from "../../errors.js";
 
 const updateUsersService = async (id, payload) => {
 	const afterUser = await User.findOne({ where: { id } }),
 		oldPassword = afterUser.password,
-		newPassword = payload?.password
+		newPassword = payload?.password;
 
-	const IsSamePass = await compare(newPassword, oldPassword)
-	
-	if (IsSamePass){
+	const IsSamePass = await compare(newPassword, oldPassword);
+
+	if (IsSamePass) {
 		throw new AppError("Password já está em uso", 400);
 	}
 
