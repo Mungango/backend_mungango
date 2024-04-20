@@ -5,6 +5,10 @@ import { loginSchema } from "../schemas/login.schema.js";
 
 const loginRoutes = Router();
 
-loginRoutes.post("", ensureDataIsValidMiddleware(loginSchema), loginController);
+loginRoutes.post(
+	"",
+	ensureDataIsValidMiddleware(loginSchema),
+	loginController
+);
 
 export default loginRoutes;

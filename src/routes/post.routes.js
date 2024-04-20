@@ -13,9 +13,10 @@ import ensureDataIsValidMiddleware from "../middlewares/ensureDataIsValid.middle
 import {
   postsCreateSchema,
   postsUpdateSchema,
-} from "../schema/posts.schema.js";
+} from "../schemas/posts.schema.js";
 
 import Post from "../models/Post.js";
+import ensureTokenIsValidMiddleware from "../middlewares/ensureTokenIsValid.middleware.js";
 
 const postRoutes = Router();
 
@@ -30,6 +31,7 @@ postRoutes.get(
 postRoutes.post(
   "",
   ensureDataIsValidMiddleware(postsCreateSchema),
+  ensureTokenIsValidMiddleware,
   createPostsController
 );
 

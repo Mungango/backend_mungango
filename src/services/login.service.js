@@ -8,6 +8,7 @@ const loginService = async (loginDate) => {
 	const user = await User.findOne({
 		where: {
 			email: loginDate.email,
+			deletedAt: null
 		},
 	});
 
