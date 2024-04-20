@@ -11,7 +11,7 @@ import ensureExistsMiddleware from "../middlewares/ensureExists.middleware.js";
 import {
 	usersCreateSchema,
 	usersUpdateSchema,
-} from "../schema/users.schema.js";
+} from "../schemas/users.schema.js";
 import User from "../models/User.js";
 
 const userRoutes = Router();
