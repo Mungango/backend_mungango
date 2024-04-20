@@ -1,14 +1,14 @@
 import Post from "../../models/Post.js";
-import { postsSchema } from "../../schema/posts.schema.js";
+import { postsSchema } from "../../schemas/posts.schema.js";
 
-const createPostsService = async (payload) => {
-  const createPost = await Post.create(payload);
+const createPostsService = async (userId, payload) => {
+	const createPost = await Post.create({ ...payload, UserId: userId });
 
-  if (!createPost) {
-    throw new AppError("No foi possível criar o post", 404);
-  }
+	if (!createPost) {
+		throw new AppError("No foi possível criar o post", 404);
+	}
 
-  return postsSchema.parse(createPost);
+	return postsSchema.parse(createPost);
 };
 
 export default createPostsService;

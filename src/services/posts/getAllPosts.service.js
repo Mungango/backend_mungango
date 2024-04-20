@@ -1,6 +1,6 @@
 import Post from "../../models/Post.js";
 import User from "../../models/User.js";
-import { postUserSchema } from "../../schema/posts.schema.js";
+import { postUserSchema } from "../../schemas/posts.schema.js";
 
 const getAllPostsService = async () => {
 	const retrivedPosts = await Post.findAll({
@@ -11,7 +11,7 @@ const getAllPostsService = async () => {
 			},
 		],
 	});
-  
+
 	return postUserSchema.array().parse(retrivedPosts);
 };
 
