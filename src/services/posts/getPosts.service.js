@@ -1,10 +1,6 @@
 import { AppError } from "../../errors.js";
 import User from "../../models/User.js";
 import Post from "../../models/Post.js";
-import {
-	usersUpdateSchema,
-	usersWithoutPassSchema,
-} from "../../schema/users.schema.js";
 import { postUserSchema } from "../../schema/posts.schema.js";
 
 const getPostsService = async (id) => {
