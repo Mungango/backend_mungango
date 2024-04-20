@@ -7,21 +7,22 @@ const getPostsService = async (id) => {
   const retrivedPost = await Post.findOne({
     where: { id },
   });
+  console.log(retrivedPost);
 
   const userId = retrivedPost.UserId;
 
   const userData = await User.findOne({ where: { id: userId } });
 
-  const userWithoutPass = usersUpdateSchema.parse(userData)
+  const userWithoutPass = usersWithoutPassSchema.parse(userData);
 
-  const data = {
-    ...retrivedPost,
+  const postWithUser = {
+    ...retrivedPost.dataValues,
     user: userWithoutPass,
   };
 
-  console.log(data);
+  console.log(postWithUser);
 
-  return data;
+  return postWithUser;
 };
 
 export default getPostsService;

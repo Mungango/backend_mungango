@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { usersWithoutPassSchema } from "./users.schema.js";
 
 const postsSchema = z.object({
   id: z.number(),
@@ -7,7 +8,10 @@ const postsSchema = z.object({
   deslikes: z.number(),
   createdAt: z.date(),
   updatedAt: z.date(),
-  UserId: z.number(),
+});
+
+const postUserSchema = postsSchema.omit({ UserId: true }).extend({
+  user: usersWithoutPassSchema,
 });
 
 const postsCreateSchema = postsSchema.omit({
@@ -20,8 +24,4 @@ const postsCreateSchema = postsSchema.omit({
 
 const postsUpdateSchema = postsSchema.partial();
 
-export {
-  postsSchema,
-  postsCreateSchema,
-  postsUpdateSchema,
-};
+export { postsSchema, postUserSchema, postsCreateSchema, postsUpdateSchema };
