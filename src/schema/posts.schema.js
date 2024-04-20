@@ -11,8 +11,11 @@ const postsSchema = z.object({
 });
 
 const postUserSchema = postsSchema.omit({ UserId: true }).extend({
-  user: usersWithoutPassSchema,
+  User: usersWithoutPassSchema,
 });
+
+
+
 
 const postsCreateSchema = postsSchema.omit({
   id: true,
