@@ -4,6 +4,7 @@ import { usersWithoutPassSchema } from "./users.schema.js";
 const postsSchema = z.object({
 	id: z.number(),
 	message: z.string(),
+	images: z.string().array().default([]),
 	likes: z.number(),
 	deslikes: z.number(),
 	createdAt: z.date(),
