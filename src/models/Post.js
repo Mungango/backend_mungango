@@ -11,9 +11,6 @@ const Post = db.define("Post", {
 		allowNull: false,
 		require: true,
 	},
-	images: {
-		type: DataTypes.JSON,
-	},
 	likes: {
 		type: DataTypes.INTEGER,
 		defaultValue: 0,

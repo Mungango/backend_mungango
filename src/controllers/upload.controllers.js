@@ -1,11 +1,10 @@
 import { v2 as cloudinary } from "cloudinary";
 import fs from "fs";
-import { uploadSchema } from "../schemas/upload.schema.js";
+import uploadService from "../services/upload.service.js";
 
 const getImageController = async (req, res) => {
 	const { public_id } = req.params;
 	const image = cloudinary.url(public_id);
-	console.log(image);
 	//http://res.cloudinary.com/dyo8h0ers/image/upload/kgnd2p0ne5xiypyqhw6c
 	res.status(200).json({ imageUrl: image });
 };
@@ -24,21 +23,11 @@ const uploadImageController = async (req, res) => {
 	});
 	//fs é uma lib nativa do node.js para manipulação do sistema operacional
 	//fs.unlink esta apagando o arquivo da pasta upload após o envio ao cloudinary
-	const {
-		secure_url: secureUrl,
-		public_id: publicId,
-		created_at: createdAt,
-		...uploadJson
-	} = upload;
+	const postId = req.params.id
 
-	const parsedObject = uploadSchema.parse({
-		publicId,
-		secureUrl,
-		createdAt: new Date(createdAt),
-		...uploadJson,
-	});
+	const uploadedImage = await uploadService(postId, upload);
 
-	return res.status(200).json(parsedObject);
+	return res.status(200).json(uploadedImage);
 };
 
 export { getImageController, uploadImageController };
