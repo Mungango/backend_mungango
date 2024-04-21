@@ -17,7 +17,7 @@ const ensureTokenIsValidMiddleware = async (
 
 	jwt.verify(token, process.env.SECRET_KEY, (error, decoded) => {
 		if (error) {
-			throw new AppError("Jwt token não encontrado", 401);
+			throw new AppError("Token de acesso inválido", 401);
 		}
 
 		request.user = {
