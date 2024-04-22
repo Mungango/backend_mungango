@@ -4,6 +4,7 @@ import userRoutes from "./routes/user.routes.js";
 import postRoutes from "./routes/post.routes.js";
 import loginRoutes from "./routes/login.routes.js";
 import uploadRoutes from "./routes/upload.routes.js";
+import commentRoutes from "./routes/comment.routes.js";
 import connect from "./db/connect.js";
 import { handleError } from "./errors.js";
 
@@ -14,6 +15,8 @@ app.use("/users", userRoutes);
 app.use("/posts", postRoutes);
 app.use("/login", loginRoutes);
 app.use("/upload", uploadRoutes);
+app.use("/comment", commentRoutes);
+
 
 // não colocar coisas a baixo desse "use"
 app.use(handleError);

@@ -4,17 +4,17 @@ import User from "../../models/User.js";
 import { postUserImageSchema } from "../../schemas/posts.schema.js";
 
 const getAllPostsService = async () => {
-	const retrivedPosts = await Post.findAll({
-		include: [
-			{
-				model: User,
-				where: { deletedAt: null },
-			},
-			{ model: Image },
-		],
-	});
+  const retrivedPosts = await Post.findAll({
+    include: [
+      {
+        model: User,
+        where: { deletedAt: null },
+      },
+      { model: Image },
+    ],
+  });
 
-	return postUserImageSchema.array().parse(retrivedPosts);
+  return postUserImageSchema.array().parse(retrivedPosts);
 };
 
 export default getAllPostsService;

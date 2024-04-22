@@ -27,7 +27,7 @@ const Comment = db.define("Comment", {
 Comment.belongsTo(User);
 User.hasMany(Comment);
 
-Comment.belongsTo(Post);
+Comment.belongsTo(Post, { onDelete: "cascade" });
 Post.hasMany(Comment);
 
 export default Comment;
