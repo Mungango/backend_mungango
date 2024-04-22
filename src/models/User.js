@@ -11,6 +11,10 @@ const User = db.define("User", {
 			len: [3, 255], // mínimo de 3 caracteres, máximo de 50 caracteres
 		},
 	},
+	image: {
+		type: DataTypes.STRING,
+		allowNull: true,
+	},
 	phone: {
 		type: DataTypes.STRING(11),
 		allowNull: false,

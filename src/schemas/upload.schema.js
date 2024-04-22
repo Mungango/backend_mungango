@@ -8,8 +8,10 @@ const uploadSchema = z.object({
 	createdAt: z.date(),
 });
 
+const uploadWithoutIdSchema = uploadSchema.omit({ id: true });
+
 const uploadSchemaWithPostId = uploadSchema.extend({
 	PostId: z.number(),
 });
 
-export { uploadSchema, uploadSchemaWithPostId };
+export { uploadSchema, uploadWithoutIdSchema, uploadSchemaWithPostId };
