@@ -21,10 +21,10 @@ const saveImage = async (path) => {
 };
 
 const getImageController = async (req, res) => {
-	const { public_id } = req.params;
-	const image = cloudinary.url(public_id);
-	//http://res.cloudinary.com/dyo8h0ers/image/upload/kgnd2p0ne5xiypyqhw6c
-	res.status(200).json({ imageUrl: image });
+  const { public_id } = req.params;
+  const image = cloudinary.url(public_id);
+  //http://res.cloudinary.com/dyo8h0ers/image/upload/kgnd2p0ne5xiypyqhw6c
+  res.status(200).json({ imageUrl: image });
 };
 
 const uploadImagePostController = async (req, res) => {
@@ -32,9 +32,9 @@ const uploadImagePostController = async (req, res) => {
 
 	const postId = req.params.id;
 
-	const uploadedImage = await uploadService(postId, upload);
+  const uploadedImage = await uploadService(postId, upload);
 
-	return res.status(200).json(uploadedImage);
+  return res.status(200).json(uploadedImage);
 };
 
 const uploadImageController = async (req, res) => {
