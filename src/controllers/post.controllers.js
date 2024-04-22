@@ -20,26 +20,27 @@ const getAllPostsController = async (req, res) => {
 
 const createPostsController = async (req, res) => {
 	const payload = req.body,
-		userId = Number(req.user.id);
+	userId = Number(req.user.id);
 
 	const createdPost = await createPostsService(userId, payload);
-
 	return res.status(201).json(createdPost);
 };
 
 const updatePostsController = async (req, res) => {
 	const payload = req.body,
-		id = req.params.id;
+	id = req.params.id;
+	const userId = Number(req.user.id)
 
-	const updatedPost = await updatePostsService(id, payload);
+	const updatedPost = await updatePostsService(id, payload, userId);
 
 	return res.status(200).json(updatedPost);
 };
 
 const deletePostsController = async (req, res) => {
 	const id = req.params.id;
+	const userId = Number(req.user.id);
 
-	await deletePostsService(id);
+	await deletePostsService(id, userId);
 
 	return res.status(204).send();
 };

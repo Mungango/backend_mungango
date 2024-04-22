@@ -39,12 +39,13 @@ postRoutes.patch(
   "/:id",
   ensureExistsMiddleware(Post, "Post"),
   ensureDataIsValidMiddleware(postsUpdateSchema),
+  ensureTokenIsValidMiddleware,
   updatePostsController
 );
 
 postRoutes.delete(
   "/:id",
-  ensureExistsMiddleware(Post, "Post"),
+  ensureExistsMiddleware(Post, "Post"), ensureTokenIsValidMiddleware,
   deletePostsController
 );
 
