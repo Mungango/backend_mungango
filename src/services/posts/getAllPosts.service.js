@@ -1,6 +1,7 @@
+import Image from "../../models/Image.js";
 import Post from "../../models/Post.js";
 import User from "../../models/User.js";
-import { postUserSchema } from "../../schemas/posts.schema.js";
+import { postUserImageSchema } from "../../schemas/posts.schema.js";
 
 const getAllPostsService = async () => {
 	const retrivedPosts = await Post.findAll({
@@ -9,10 +10,11 @@ const getAllPostsService = async () => {
 				model: User,
 				where: { deletedAt: null },
 			},
+			{ model: Image },
 		],
 	});
 
-	return postUserSchema.array().parse(retrivedPosts);
+	return postUserImageSchema.array().parse(retrivedPosts);
 };
 
 export default getAllPostsService;
