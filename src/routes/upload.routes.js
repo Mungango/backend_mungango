@@ -1,6 +1,7 @@
 import {
 	getImageController,
 	uploadImageController,
+	uploadImagePostController,
 } from "../controllers/upload.controllers.js";
 import upload from "../middlewares/uploadImage.middleware.js";
 import ensureExistsMiddleware from "../middlewares/ensureExists.middleware.js";
@@ -15,7 +16,9 @@ uploadRoutes.post(
 	"/:id",
 	upload.single("image"),
 	ensureExistsMiddleware(Post, "Post"),
-	uploadImageController
+	uploadImagePostController
 );
+
+uploadRoutes.post("", upload.single("image"), uploadImageController);
 
 export default uploadRoutes;
