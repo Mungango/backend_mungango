@@ -7,8 +7,6 @@ import { postsSchema } from "../../schemas/posts.schema.js";
 const createPostsService = async (userId, payload) => {
 	const createPost = await Post.create({ ...payload, UserId: userId });
 
-	console.log(userId)
-
 	if (!createPost) {
 		throw new AppError("No foi possível criar o post", 404);
 	}

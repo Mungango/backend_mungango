@@ -21,9 +21,8 @@ const getAllPostsController = async (req, res) => {
 const createPostsController = async (req, res) => {
 	const payload = req.body,
 	userId = Number(req.user.id);
-	
+
 	const createdPost = await createPostsService(userId, payload);
-	
 	return res.status(201).json(createdPost);
 };
 
