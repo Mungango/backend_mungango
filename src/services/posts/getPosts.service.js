@@ -1,7 +1,8 @@
 import { AppError } from "../../errors.js";
 import User from "../../models/User.js";
 import Post from "../../models/Post.js";
-import { postUserSchema } from "../../schemas/posts.schema.js";
+import Image from "../../models/Image.js"
+import { postUserImageSchema } from "../../schemas/posts.schema.js";
 
 const getPostsService = async (id) => {
 	const retrivedPost = await Post.findOne({
@@ -11,6 +12,9 @@ const getPostsService = async (id) => {
 				model: User,
 				where: { deletedAt: null },
 			},
+			{
+				model: Image
+			}
 		],
 	});
 
@@ -19,7 +23,7 @@ const getPostsService = async (id) => {
 		throw new AppError("Post não encontrado", 404);
 	}
 
-	return postUserSchema.parse(retrivedPost);
+	return postUserImageSchema.parse(retrivedPost);
 };
 
 export default getPostsService;
