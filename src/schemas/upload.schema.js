@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 const uploadSchema = z.object({
+	id: z.number(),
 	publicId: z.string(),
 	url: z.string(),
 	secureUrl: z.string(),
