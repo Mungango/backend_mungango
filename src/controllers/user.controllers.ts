@@ -4,6 +4,8 @@ import deleteUsersService from "../services/users/deleteUsers.service";
 import getAllUsersService from "../services/users/getAllUsers.service";
 import getUsersService from "../services/users/getUsers.service";
 import updateUsersService from "../services/users/updateUsers.service";
+import { iUserCreate, iUserUpdate } from "../interfaces/user.interface";
+
 
 const getUsersController = async (req: Request, res: Response) => {
 	const id = Number(req.params.id);
@@ -20,7 +22,7 @@ const getAllUsersController = async (req: Request, res: Response) => {
 };
 
 const createUsersController = async (req: Request, res: Response) => {
-	const payload = req.body;
+	const payload: iUserCreate = req.body;
 
 	const createdUser = await createUsersService(payload);
 
@@ -28,7 +30,7 @@ const createUsersController = async (req: Request, res: Response) => {
 };
 
 const updateUsersController = async (req: Request, res: Response) => {
-	const payload = req.body,
+	const payload: iUserUpdate = req.body,
 		id = Number(req.params.id);
 
 	const updatedUser = await updateUsersService(id, payload);
