@@ -22,7 +22,7 @@ import ensureTokenIsValidMiddleware from "../middlewares/ensureTokenIsValid.midd
 
 const commentsRoutes = Router();
 
-commentsRoutes.get("/:id", getAllCommentsController);
+commentsRoutes.get("/all/:id", getAllCommentsController);
 
 commentsRoutes.get(
   "/:id",
