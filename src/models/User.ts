@@ -1,45 +1,64 @@
-import { DataTypes } from "sequelize";
+import { DataTypes, Model } from "sequelize";
 
-import db from "../db/connect";
+import sequelize from "../db/connect";
 import { hashSync } from "bcrypt";
+import { iUser, iUserCreate } from "../interfaces/user.interface";
 
-const User = db.define("User", {
-	name: {
-		type: DataTypes.STRING,
-		allowNull: false,
-		validate: {
-			len: [3, 255], // mínimo de 3 caracteres, máximo de 50 caracteres
+class User extends Model<iUser, iUserCreate> {
+	declare id: number;
+	declare name: string;
+	declare image: string | null;
+	declare phone: string;
+	declare email: string;
+	declare password: string;
+	declare deletedAt: Date | null;
+}
+
+User.init(
+	{
+		id: { type: DataTypes.NUMBER },
+		name: {
+			type: DataTypes.STRING,
+			allowNull: false,
+			validate: {
+				len: [3, 255], // mínimo de 3 caracteres, máximo de 50 caracteres
+			},
+		},
+		image: {
+			type: DataTypes.STRING,
+			allowNull: true,
+		},
+		phone: {
+			type: DataTypes.STRING(11),
+			allowNull: false,
+		},
+		email: {
+			type: DataTypes.STRING(55),
+			unique: true,
+			allowNull: false,
+			validate: {
+				isEmail: true,
+			},
+		},
+		password: {
+			type: DataTypes.STRING,
+			allowNull: false,
+			validate: {
+				len: [6, 120],
+			},
+		},
+		createdAt: {
+			type: DataTypes.DATE,
+		},
+		updatedAt: { type: DataTypes.DATE },
+		deletedAt: {
+			type: DataTypes.DATE,
+			allowNull: true, // Permitir valor nulo
+			defaultValue: null, // Valor padrão é null
 		},
 	},
-	image: {
-		type: DataTypes.STRING,
-		allowNull: true,
-	},
-	phone: {
-		type: DataTypes.STRING(11),
-		allowNull: false,
-	},
-	email: {
-		type: DataTypes.STRING(55),
-		unique: true,
-		allowNull: false,
-		validate: {
-			isEmail: true,
-		},
-	},
-	password: {
-		type: DataTypes.STRING,
-		allowNull: false,
-		validate: {
-			len: [6, 120],
-		},
-	},
-	deletedAt: {
-		type: DataTypes.DATE,
-		allowNull: true, // Permitir valor nulo
-		defaultValue: null, // Valor padrão é null
-	},
-});
+	{ sequelize, modelName: "User" }
+);
 
 User.beforeCreate(async (user: any) => {
 	const hashedPassword = hashSync(user.password, 10);

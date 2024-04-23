@@ -2,9 +2,12 @@ import { compare } from "bcrypt";
 import User from "../../models/User";
 import { usersWithoutPassSchema } from "../../schemas/users.schema";
 import { AppError } from "../../errors";
-import { iUserUpdate, iUsersWithoutPass } from "../../interfaces/user.interface";
+import { iUsersWithoutPass } from "../../interfaces/user.interface";
 
-const updateUsersService = async (id: number, payload: iUserUpdate):Promise<iUsersWithoutPass> => {
+const updateUsersService = async (
+	id: number,
+	payload: any
+): Promise<iUsersWithoutPass> => {
 	const afterUser: any = await User.findOne({ where: { id } }),
 		oldPassword = afterUser!.password,
 		newPassword = payload?.password;
@@ -24,7 +27,8 @@ const updateUsersService = async (id: number, payload: iUserUpdate):Promise<iUse
 
 	const updatedUser = await User.findOne({ where: { id } });
 
-	const updatedUserWithoutPass: iUsersWithoutPass = usersWithoutPassSchema.parse(updatedUser);
+	const updatedUserWithoutPass: iUsersWithoutPass =
+		usersWithoutPassSchema.parse(updatedUser);
 
 	return updatedUserWithoutPass;
 };
