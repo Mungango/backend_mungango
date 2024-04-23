@@ -3,13 +3,11 @@ import {
 	usersSchema,
 	usersCreateSchema,
 	usersWithoutPassSchema,
-	usersUpdateSchema,
 } from "../schemas/users.schema";
-import { Optional } from "sequelize";
 
 type iUser = z.infer<typeof usersSchema>;
 type iUserCreate = z.infer<typeof usersCreateSchema>;
 type iUsersWithoutPass = z.infer<typeof usersWithoutPassSchema>;
-// type iUserUpdate = Optional<iUser, typeof usersCreateSchema>;
+type iUserUpdate = Partial<Pick<iUserCreate, keyof iUserCreate>>;
 
-export { iUser, iUserCreate, iUsersWithoutPass };
+export { iUser, iUserCreate, iUsersWithoutPass, iUserUpdate };

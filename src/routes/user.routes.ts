@@ -10,6 +10,7 @@ import ensureDataIsValidMiddleware from "../middlewares/ensureDataIsValid.middle
 import ensureExistsMiddleware from "../middlewares/ensureExists.middleware";
 import { usersCreateSchema, usersUpdateSchema } from "../schemas/users.schema";
 import User from "../models/User";
+import ensureTokenIsValidMiddleware from "../middlewares/ensureTokenIsValid.middleware";
 
 const userRoutes = Router();
 
@@ -31,6 +32,7 @@ userRoutes.patch(
 	"/:id",
 	ensureExistsMiddleware(User, "Usuário"),
 	ensureDataIsValidMiddleware(usersUpdateSchema),
+	ensureTokenIsValidMiddleware,
 	updateUsersController
 );
 

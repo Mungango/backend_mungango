@@ -16,7 +16,7 @@ class User extends Model<iUser, iUserCreate> {
 
 User.init(
 	{
-		id: { type: DataTypes.NUMBER },
+		id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
 		name: {
 			type: DataTypes.STRING,
 			allowNull: false,
