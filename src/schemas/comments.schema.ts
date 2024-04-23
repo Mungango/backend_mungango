@@ -8,15 +8,15 @@ const commentsSchema = z.object({
 	deslikes: z.number(),
 	createdAt: z.date(),
 	updatedAt: z.date(),
+	postId: z.number(),
+	userId: z.number(),
 });
-
-// const commentUserSchema = commentsSchema.omit({ UserId: true }).extend({
-//   User: usersWithoutPassSchema,
-// });
 
 const commentUserSchema = commentsSchema.extend({
 	User: usersWithoutPassSchema,
 });
+
+const commentUserNoUserIdSchema = commentUserSchema.omit({ userId: true });
 
 const commentsCreateSchema = commentsSchema.omit({
 	id: true,
@@ -26,11 +26,20 @@ const commentsCreateSchema = commentsSchema.omit({
 	deslikes: true,
 });
 
-const commentsUpdateSchema = commentsSchema.partial();
+const commentsNoIDsSchema = commentsCreateSchema.omit({
+	userId: true,
+	postId: true,
+});
+
+const commentsUpdateSchema = commentsCreateSchema
+	.extend({ likes: z.number(), deslikes: z.number() })
+	.partial();
 
 export {
 	commentsSchema,
 	commentUserSchema,
+	commentsNoIDsSchema,
 	commentsCreateSchema,
 	commentsUpdateSchema,
+	commentUserNoUserIdSchema,
 };
