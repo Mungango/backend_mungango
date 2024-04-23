@@ -3,9 +3,12 @@ import User from "../../models/User";
 import Post from "../../models/Post";
 import Comment from "../../models/Comment";
 
-import { commentUserSchema } from "../../schemas/comments.schema";
+import { commentUserNoUserIdSchema } from "../../schemas/comments.schema";
+import { iCommentUserNoUserId } from "../../interfaces/comment.interface";
 
-const getCommentsService = async (id: number) => {
+const getCommentsService = async (
+	id: number
+): Promise<iCommentUserNoUserId> => {
 	const retrivedComment = await Comment.findOne({
 		where: { id },
 		include: [
@@ -24,7 +27,7 @@ const getCommentsService = async (id: number) => {
 		throw new AppError("Comentário não encontrado", 404);
 	}
 
-	return commentUserSchema.parse(retrivedComment);
+	return commentUserNoUserIdSchema.parse(retrivedComment);
 };
 
 export default getCommentsService;

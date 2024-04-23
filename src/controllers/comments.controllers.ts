@@ -4,6 +4,7 @@ import deleteCommentsService from "../services/comments/deleteComments.service";
 import getAllCommentsService from "../services/comments/getAllComments.service";
 import getCommentsService from "../services/comments/getComments.service";
 import updateCommentsService from "../services/comments/updateComments.service";
+import { iCommentCreateNoIDs } from "../interfaces/comment.interface";
 
 const getCommentsController = async (req: Request, res: Response) => {
 	const id = Number(req.params.id);
@@ -22,7 +23,7 @@ const getAllCommentsController = async (req: Request, res: Response) => {
 
 const createCommentsController = async (req: Request, res: Response) => {
 	const postId = Number(req.params.id);
-	const payload = req.body,
+	const payload: iCommentCreateNoIDs = req.body,
 		userId = Number(req.user.id);
 
 	const createdPost = await createCommentsService(postId, userId, payload);
