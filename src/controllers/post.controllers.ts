@@ -7,7 +7,7 @@ import getPostsService from "../services/posts/getPosts.service";
 import updatePostsService from "../services/posts/updatePosts.service";
 
 const getPostsController = async (req: Request, res: Response) => {
-  const id = req.params.id;
+  const id = Number(req.params.id);
 
   const retrivedPost = await getPostsService(id);
 
@@ -30,7 +30,7 @@ const createPostsController = async (req: Request, res: Response) => {
 
 const updatePostsController = async (req: Request, res: Response) => {
   const payload = req.body,
-    id = req.params.id;
+    id = Number(req.params.id);
   const userId = Number(req.user.id);
 
   const updatedPost = await updatePostsService(id, payload, userId);
@@ -39,7 +39,7 @@ const updatePostsController = async (req: Request, res: Response) => {
 };
 
 const deletePostsController = async (req: Request, res: Response) => {
-  const id = req.params.id;
+  const id = Number(req.params.id);
   const userId = Number(req.user.id);
 
   await deletePostsService(id, userId);

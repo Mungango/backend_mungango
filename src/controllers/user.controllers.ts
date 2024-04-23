@@ -6,7 +6,7 @@ import getUsersService from "../services/users/getUsers.service";
 import updateUsersService from "../services/users/updateUsers.service";
 
 const getUsersController = async (req: Request, res: Response) => {
-	const id = req.params.id;
+	const id = Number(req.params.id);
 
 	const retrivedUser = await getUsersService(id);
 
