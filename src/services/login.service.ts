@@ -2,10 +2,11 @@ import jwt from "jsonwebtoken";
 import User from "../models/User";
 import { compare } from "bcrypt";
 import { AppError } from "../errors";
+import { iLogin } from "../interfaces/login.interface";
 import "dotenv/config";
 
-const loginService = async (loginDate: any) => {
-	const user: any = await User.findOne({
+const loginService = async (loginDate: iLogin) => {
+	const user = await User.findOne({
 		where: {
 			email: loginDate.email,
 			deletedAt: null,
