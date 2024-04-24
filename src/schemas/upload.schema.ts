@@ -10,8 +10,20 @@ const uploadSchema = z.object({
 
 const uploadWithoutIdSchema = uploadSchema.omit({ id: true });
 
-const uploadSchemaWithPostId = uploadSchema.extend({
-	PostId: z.number(),
+const uploadSchemaWithPostId = uploadWithoutIdSchema.extend({
+	postId: z.number(),
 });
 
-export { uploadSchema, uploadWithoutIdSchema, uploadSchemaWithPostId };
+const externalUploadApiResponseSchema = z.object({
+	public_id: z.string(),
+	url: z.string(),
+	secure_url: z.string(),
+	created_at: z.string(),
+});
+
+export {
+	uploadSchema,
+	uploadWithoutIdSchema,
+	uploadSchemaWithPostId,
+	externalUploadApiResponseSchema,
+};
