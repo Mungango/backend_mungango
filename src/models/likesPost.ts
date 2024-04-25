@@ -11,7 +11,6 @@ import {
 } from "../interfaces/likesPost.interface";
 
 class LikesPost extends Model<ilikesPost, ilikesPostCreate> {
-  declare id: number;
   declare userId: number;
   declare ownerId: number;
 }
