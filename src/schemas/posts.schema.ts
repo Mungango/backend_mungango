@@ -7,6 +7,7 @@ const postsSchema = z.object({
 	message: z.string(),
 	createdAt: z.date(),
 	updatedAt: z.date(),
+	userId: z.number(),
 });
 
 const postUserImageSchema = postsSchema.extend({
@@ -16,6 +17,7 @@ const postUserImageSchema = postsSchema.extend({
 
 const postsCreateSchema = postsSchema.omit({
 	id: true,
+	userId: true,
 	createdAt: true,
 	updatedAt: true,
 });
