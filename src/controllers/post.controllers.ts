@@ -5,52 +5,53 @@ import deletePostsService from "../services/posts/deletePosts.service";
 import getAllPostsService from "../services/posts/getAllPosts.service";
 import getPostsService from "../services/posts/getPosts.service";
 import updatePostsService from "../services/posts/updatePosts.service";
+import { iPostCreate, iPostUpdate } from "../interfaces/post.interface";
 
 const getPostsController = async (req: Request, res: Response) => {
-  const id = Number(req.params.id);
+	const id = Number(req.params.id);
 
-  const retrivedPost = await getPostsService(id);
+	const retrivedPost = await getPostsService(id);
 
-  return res.status(200).json(retrivedPost);
+	return res.status(200).json(retrivedPost);
 };
 
 const getAllPostsController = async (req: Request, res: Response) => {
-  const allPosts = await getAllPostsService();
+	const allPosts = await getAllPostsService();
 
-  return res.status(200).json(allPosts);
+	return res.status(200).json(allPosts);
 };
 
 const createPostsController = async (req: Request, res: Response) => {
-  const payload = req.body,
-    userId = Number(req.user.id);
+	const payload: iPostCreate = req.body,
+		userId = Number(req.user.id);
 
-  const createdPost = await createPostsService(userId, payload);
-  return res.status(201).json(createdPost);
+	const createdPost = await createPostsService(userId, payload);
+	return res.status(201).json(createdPost);
 };
 
 const updatePostsController = async (req: Request, res: Response) => {
-  const payload = req.body,
-    id = Number(req.params.id);
-  const userId = Number(req.user.id);
+	const payload: iPostUpdate = req.body,
+		id = Number(req.params.id);
+	const userId = Number(req.user.id);
 
-  const updatedPost = await updatePostsService(id, payload, userId);
+	const updatedPost = await updatePostsService(id, payload, userId);
 
-  return res.status(200).json(updatedPost);
+	return res.status(200).json(updatedPost);
 };
 
 const deletePostsController = async (req: Request, res: Response) => {
-  const id = Number(req.params.id);
-  const userId = Number(req.user.id);
+	const id = Number(req.params.id);
+	const userId = Number(req.user.id);
 
-  await deletePostsService(id, userId);
+	await deletePostsService(id, userId);
 
-  return res.status(204).send();
+	return res.status(204).send();
 };
 
 export {
-  getPostsController,
-  getAllPostsController,
-  createPostsController,
-  updatePostsController,
-  deletePostsController,
+	getPostsController,
+	getAllPostsController,
+	createPostsController,
+	updatePostsController,
+	deletePostsController,
 };
