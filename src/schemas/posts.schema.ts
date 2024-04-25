@@ -3,42 +3,28 @@ import { usersWithoutPassSchema } from "./users.schema";
 import { uploadSchema } from "./upload.schema";
 
 const postsSchema = z.object({
-  id: z.number(),
-  message: z.string(),
-  likes: z.number(),
-  deslikes: z.number(),
-  createdAt: z.date(),
-  updatedAt: z.date(),
+	id: z.number(),
+	message: z.string(),
+	createdAt: z.date(),
+	updatedAt: z.date(),
 });
 
-// const postUserImageSchema = postsSchema.omit({ UserId: true }).extend({
-// 	Images: uploadSchema.array(),
-// 	User: usersWithoutPassSchema,
-// });
-
 const postUserImageSchema = postsSchema.extend({
-  Images: uploadSchema.array(),
-  User: usersWithoutPassSchema,
+	Images: uploadSchema.array(),
+	User: usersWithoutPassSchema,
 });
 
 const postsCreateSchema = postsSchema.omit({
-  id: true,
-  createdAt: true,
-  updatedAt: true,
-  likes: true,
-  deslikes: true,
+	id: true,
+	createdAt: true,
+	updatedAt: true,
 });
 
-const postsUpdateSchema = postsCreateSchema
-  .extend({
-    likes: z.number(),
-    deslikes: z.number(),
-  })
-  .partial();
+const postsUpdateSchema = postsCreateSchema.partial();
 
 export {
-  postsSchema,
-  postUserImageSchema,
-  postsCreateSchema,
-  postsUpdateSchema,
+	postsSchema,
+	postUserImageSchema,
+	postsCreateSchema,
+	postsUpdateSchema,
 };
