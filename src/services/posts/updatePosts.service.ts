@@ -2,12 +2,16 @@ import { AppError } from "../../errors";
 import { iPostUpdate } from "../../interfaces/post.interface";
 import Post from "../../models/Post";
 
-const updatePostsService = async (id: number, payload: any, userId: number) => {
-	const postData = await Post.findOne({ where: { id } });
+const updatePostsService = async (
+	id: number,
+	payload: iPostUpdate,
+	userId: number
+) => {
+	const postData = await Post.findOne({ where: { id, userId } });
 
-	// if (postData.userId != userId) {
-	// 	throw new AppError("Você não é o proprietário desse post!", 403);
-	// }
+	if (!postData?.dataValues) {
+		throw new AppError("Você não é o proprietário desse post!", 403);
+	}
 
 	await Post.update(payload, {
 		where: { id },

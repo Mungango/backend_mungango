@@ -21,6 +21,9 @@ Post.init(
 			type: DataTypes.DATE,
 		},
 		updatedAt: { type: DataTypes.DATE },
+		userId: {
+			type: DataTypes.INTEGER,
+		},
 	},
 	{ sequelize, modelName: "Post" }
 );
