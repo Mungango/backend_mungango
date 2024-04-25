@@ -1,6 +1,8 @@
 import Image from "../../models/Image";
 import Post from "../../models/Post";
 import User from "../../models/User";
+import LikesPost from "../../models/likesPost";
+
 import { postUserImageSchema } from "../../schemas/posts.schema";
 
 const getAllPostsService = async () => {
@@ -11,6 +13,9 @@ const getAllPostsService = async () => {
         where: { deletedAt: null },
       },
       { model: Image },
+      {
+        model: LikesPost
+      }
     ],
   });
 

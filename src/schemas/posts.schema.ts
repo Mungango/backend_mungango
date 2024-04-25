@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { usersWithoutPassSchema } from "./users.schema";
 import { uploadSchema } from "./upload.schema";
+import { likesPostGetSchema } from "./likePost.schema";
 
 const postsSchema = z.object({
 	id: z.number(),
@@ -12,6 +13,7 @@ const postsSchema = z.object({
 const postUserImageSchema = postsSchema.extend({
 	Images: uploadSchema.array(),
 	User: usersWithoutPassSchema,
+	LikesPost: likesPostGetSchema
 });
 
 const postsCreateSchema = postsSchema.omit({

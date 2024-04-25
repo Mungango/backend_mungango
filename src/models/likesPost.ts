@@ -21,7 +21,7 @@ LikesPost.init(
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
-      autoIncrement: false,
+      autoIncrement: true,
     },
     type: {
       type: DataTypes.ENUM,
@@ -41,7 +41,7 @@ LikesPost.init(
 LikesPost.belongsTo(User, { foreignKey: "userId" });
 User.hasMany(LikesPost, { foreignKey: "userId" });
 
-LikesPost.belongsTo(Post, { foreignKey: "userId" });
-Post.hasMany(LikesPost, { foreignKey: "userId" });
+LikesPost.belongsTo(Post, { foreignKey: "ownerId" });
+Post.hasMany(LikesPost, { foreignKey: "ownerId" });
 
 export default LikesPost;

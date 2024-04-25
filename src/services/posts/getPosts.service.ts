@@ -2,6 +2,8 @@ import { AppError } from "../../errors";
 import User from "../../models/User";
 import Post from "../../models/Post";
 import Image from "../../models/Image";
+import LikesPost from "../../models/likesPost";
+
 import { postUserImageSchema } from "../../schemas/posts.schema";
 
 const getPostsService = async (id: number) => {
@@ -14,6 +16,9 @@ const getPostsService = async (id: number) => {
       },
       {
         model: Image,
+      },
+      {
+        model: LikesPost,
       },
     ],
   });
