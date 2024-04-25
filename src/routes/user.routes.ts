@@ -4,6 +4,8 @@ import {
 	deleteUsersController,
 	followUserController,
 	getAllUsersController,
+	getFollowersUserController,
+	getFollowingUserController,
 	getUsersController,
 	unfollowUserController,
 	updateUsersController,
@@ -45,6 +47,18 @@ userRoutes.delete(
 );
 
 // User Follower Routes
+userRoutes.get(
+	"/following/:id",
+	// ensureExistsMiddleware(User, "Usuário"),
+	getFollowingUserController
+);
+
+userRoutes.get(
+	"/followers/:id",
+	// ensureExistsMiddleware(User, "Usuário"),
+	getFollowersUserController
+);
+
 userRoutes.post(
 	"/follow/:id",
 	ensureExistsMiddleware(User, "Usuário"),

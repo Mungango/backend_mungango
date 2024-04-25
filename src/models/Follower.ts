@@ -6,17 +6,20 @@ import User from "./User";
 import { iFollower, iFollowerCreate } from "../interfaces/follower.interface";
 
 class Follower extends Model<iFollower, iFollowerCreate> {
-	declare follower_id: number;
-	declare user_id: number;
+	declare followerId: number;
+	declare userId: number;
 }
 
 // Definindo a tabela de post
 Follower.init(
-	{
+	{	
+		id: {
+			type: DataTypes.INTEGER,
+			autoIncrement: true,
+			primaryKey: true,
+		},
 		followerId: {
 			type: DataTypes.INTEGER,
-			primaryKey: true,
-			autoIncrement: false,
 		},
 		userId: {
 			type: DataTypes.INTEGER,
@@ -25,7 +28,7 @@ Follower.init(
 			type: DataTypes.DATE,
 		},
 	},
-	{ sequelize, modelName: "Follower" }
+	{ sequelize, updatedAt: false, modelName: "Follower" }
 );
 
 // Fazendo a relação de um para muitos
