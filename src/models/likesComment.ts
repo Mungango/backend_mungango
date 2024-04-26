@@ -23,11 +23,11 @@ LikesComment.init(
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
-      autoIncrement: false,
+      autoIncrement: true,
     },
     type: {
       type: DataTypes.ENUM,
-      values: ["like", "deslike"],
+      values: ["like", "dislike"],
     },
     userId: {
       type: DataTypes.INTEGER,
@@ -43,7 +43,7 @@ LikesComment.init(
 LikesComment.belongsTo(User, { foreignKey: "userId" });
 User.hasMany(LikesComment, { foreignKey: "userId" });
 
-LikesComment.belongsTo(Post, { foreignKey: "userId" });
-Post.hasMany(LikesComment, { foreignKey: "userId" });
+LikesComment.belongsTo(Post, { foreignKey: "ownerId" });
+Post.hasMany(LikesComment, { foreignKey: "ownerId" });
 
 export default LikesComment;

@@ -4,9 +4,17 @@ import Post from "../../models/Post";
 import Image from "../../models/Image";
 import LikesPost from "../../models/likesPost";
 
-import { postUserImageSchema } from "../../schemas/posts.schema";
+import { postUserImageLikeSchema } from "../../schemas/posts.schema";
 
 const getPostsService = async (id: number) => {
+  const likeCount = await LikesPost.count({
+    where: { ownerId: id, type: "like" },
+  });
+
+  const dislikeCount = await LikesPost.count({
+    where: { ownerId: id, type: "dislike" },
+  });
+
   const retrivedPost = await Post.findOne({
     where: { id },
     include: [
@@ -17,9 +25,6 @@ const getPostsService = async (id: number) => {
       {
         model: Image,
       },
-      {
-        model: LikesPost,
-      },
     ],
   });
 
@@ -28,7 +33,9 @@ const getPostsService = async (id: number) => {
     throw new AppError("Post não encontrado", 404);
   }
 
-  return postUserImageSchema.parse(retrivedPost);
+  const dataPost = { likeCount, dislikeCount, ...retrivedPost };
+
+  return postUserImageLikeSchema.parse(dataPost);
 };
 
 export default getPostsService;

@@ -25,7 +25,7 @@ LikesPost.init(
     },
     type: {
       type: DataTypes.ENUM,
-      values: ["like", "deslike"],
+      values: ["like", "dislike"],
     },
     userId: {
       type: DataTypes.INTEGER,

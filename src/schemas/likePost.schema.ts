@@ -9,11 +9,5 @@ const likesPostSchema = z.object({
 
 const likesPostCreateSchema = likesPostSchema.omit({ id: true });
 
-const likesPostGetSchema = likesPostSchema.omit({
-  id: true,
-  userId: true,
-  ownerId: true,
-});
 
-
-export { likesPostSchema, likesPostCreateSchema, likesPostGetSchema };
+export { likesPostSchema, likesPostCreateSchema };
