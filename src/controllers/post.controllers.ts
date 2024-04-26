@@ -5,6 +5,7 @@ import deletePostsService from "../services/posts/deletePosts.service";
 import getAllPostsService from "../services/posts/getAllPosts.service";
 import getPostsService from "../services/posts/getPosts.service";
 import updatePostsService from "../services/posts/updatePosts.service";
+import likePostsService from "../services/posts/likePosts.service";
 import { iPostCreate, iPostUpdate } from "../interfaces/post.interface";
 
 const getPostsController = async (req: Request, res: Response) => {
@@ -48,10 +49,23 @@ const deletePostsController = async (req: Request, res: Response) => {
 	return res.status(204).send();
 };
 
+const likePostsController = async (req: Request, res: Response) => {
+  const payload = req.body;
+  const id = Number(req.params.id);
+  const userId = Number(req.user.id);
+
+  const data = { ownerId: id, userId, ...payload };
+
+  await likePostsService(data);
+
+  return res.status(204).send();
+};
+
 export {
-	getPostsController,
-	getAllPostsController,
-	createPostsController,
-	updatePostsController,
-	deletePostsController,
+  getPostsController,
+  getAllPostsController,
+  createPostsController,
+  updatePostsController,
+  deletePostsController,
+  likePostsController,
 };

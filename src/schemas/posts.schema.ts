@@ -10,10 +10,21 @@ const postsSchema = z.object({
 	userId: z.number(),
 });
 
-const postUserImageSchema = postsSchema.extend({
-	Images: uploadSchema.array(),
-	User: usersWithoutPassSchema,
-});
+// const postUserImageLikeSchema = postsSchema.extend({
+// 	Images: uploadSchema.array(),
+// 	User: usersWithoutPassSchema,
+// 	like: z.number(),
+// 	dislike: z.number(),
+// });
+
+const postUserImageLikeSchema = postsSchema
+	.extend({
+		likes: z.number(),
+		dislikes: z.number(),
+		Images: uploadSchema.array(),
+		User: usersWithoutPassSchema,
+	})
+	.omit({ userId: true });
 
 const postsCreateSchema = postsSchema.omit({
 	id: true,
@@ -26,7 +37,7 @@ const postsUpdateSchema = postsCreateSchema.partial();
 
 export {
 	postsSchema,
-	postUserImageSchema,
+	postUserImageLikeSchema,
 	postsCreateSchema,
 	postsUpdateSchema,
 };
