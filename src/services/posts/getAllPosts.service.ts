@@ -13,11 +13,29 @@ const getAllPostsService = async () => {
         where: { deletedAt: null },
       },
       { model: Image },
-
     ],
   });
 
-  return postUserImageLikeSchema.array().parse(retrivedPosts);
+  // Para cada post, obtemos as contagens de likes e dislikes
+  const postsWithLikesAndDislikes = await Promise.all(
+    retrivedPosts.map(async (post) => {
+      const like = await LikesPost.count({
+        where: { ownerId: post.dataValues.id, type: "like" },
+      });
+
+      const dislike = await LikesPost.count({
+        where: { ownerId: post.dataValues.id, type: "dislike" },
+      });
+
+      return {
+        ...post.dataValues,
+        like,
+        dislike,
+      };
+    })
+  );
+
+  return postUserImageLikeSchema.array().parse(postsWithLikesAndDislikes);
 };
 
 export default getAllPostsService;
