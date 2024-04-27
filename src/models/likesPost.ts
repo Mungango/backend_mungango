@@ -38,10 +38,10 @@ LikesPost.init(
 );
 
 // Fazendo a relação de um para muitos
-LikesPost.belongsTo(User, { foreignKey: "userId" });
+LikesPost.belongsTo(User, { foreignKey: "userId", onDelete: "cascade" });
 User.hasMany(LikesPost, { foreignKey: "userId" });
 
-LikesPost.belongsTo(Post, { foreignKey: "ownerId" });
+LikesPost.belongsTo(Post, { foreignKey: "ownerId", onDelete: "cascade" });
 Post.hasMany(LikesPost, { foreignKey: "ownerId" });
 
 export default LikesPost;
