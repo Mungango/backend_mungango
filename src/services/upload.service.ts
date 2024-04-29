@@ -19,7 +19,7 @@ const uploadService = async (
 		createdAt: new Date(createdAt),
 		...uploadJson,
 	});
-	console.log(postId);
+
 	const createdImage = await Image.create({ ...parsedObject, postId });
 
 	return createdImage;
