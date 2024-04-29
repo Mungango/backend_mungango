@@ -2,8 +2,12 @@ import { Router } from "express";
 import {
 	createUsersController,
 	deleteUsersController,
+	followUserController,
 	getAllUsersController,
+	getFollowersUserController,
+	getFollowingUserController,
 	getUsersController,
+	unfollowUserController,
 	updateUsersController,
 } from "../controllers/user.controllers";
 import ensureDataIsValidMiddleware from "../middlewares/ensureDataIsValid.middleware";
@@ -40,6 +44,33 @@ userRoutes.delete(
 	"/:id",
 	ensureExistsMiddleware(User, "Usuário"),
 	deleteUsersController
+);
+
+// User Follower Routes
+userRoutes.get(
+	"/following/:id",
+	// ensureExistsMiddleware(User, "Usuário"),
+	getFollowingUserController
+);
+
+userRoutes.get(
+	"/followers/:id",
+	// ensureExistsMiddleware(User, "Usuário"),
+	getFollowersUserController
+);
+
+userRoutes.post(
+	"/follow/:id",
+	ensureExistsMiddleware(User, "Usuário"),
+	ensureTokenIsValidMiddleware,
+	followUserController
+);
+
+userRoutes.delete(
+	"/follow/:id",
+	ensureExistsMiddleware(User, "Usuário"),
+	ensureTokenIsValidMiddleware,
+	unfollowUserController
 );
 
 export default userRoutes;

@@ -5,6 +5,11 @@ import deletePostsService from "../services/posts/deletePosts.service";
 import getAllPostsService from "../services/posts/getAllPosts.service";
 import getPostsService from "../services/posts/getPosts.service";
 import updatePostsService from "../services/posts/updatePosts.service";
+import likePostsService from "../services/posts/likePosts.service";
+import { iPostCreate, iPostUpdate } from "../interfaces/post.interface";
+import { ilikesPostCreate, ilikesPostUpdate } from "../interfaces/likesPost.interface";
+import likeAndDislike from "../middlewares/likeAndDislike.middleware";
+import LikesPost from "../models/likesPost";
 
 const getPostsController = async (req: Request, res: Response) => {
   const id = Number(req.params.id);
@@ -21,7 +26,7 @@ const getAllPostsController = async (req: Request, res: Response) => {
 };
 
 const createPostsController = async (req: Request, res: Response) => {
-  const payload = req.body,
+  const payload: iPostCreate = req.body,
     userId = Number(req.user.id);
 
   const createdPost = await createPostsService(userId, payload);
@@ -29,7 +34,7 @@ const createPostsController = async (req: Request, res: Response) => {
 };
 
 const updatePostsController = async (req: Request, res: Response) => {
-  const payload = req.body,
+  const payload: iPostUpdate = req.body,
     id = Number(req.params.id);
   const userId = Number(req.user.id);
 
@@ -47,10 +52,23 @@ const deletePostsController = async (req: Request, res: Response) => {
   return res.status(204).send();
 };
 
+const likePostsController = async (req: Request, res: Response) => {
+  const payload = req.body;
+  const id = Number(req.params.id);
+  const userId = Number(req.user.id);
+
+  const data: ilikesPostCreate = { ownerId: id, userId, ...payload};
+
+  await likeAndDislike(LikesPost, "post", data);
+
+  return res.status(204).send();
+};
+
 export {
   getPostsController,
   getAllPostsController,
   createPostsController,
   updatePostsController,
   deletePostsController,
+  likePostsController,
 };

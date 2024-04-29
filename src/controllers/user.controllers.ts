@@ -5,7 +5,10 @@ import getAllUsersService from "../services/users/getAllUsers.service";
 import getUsersService from "../services/users/getUsers.service";
 import updateUsersService from "../services/users/updateUsers.service";
 import { iUserCreate, iUserUpdate } from "../interfaces/user.interface";
-
+import followUsersService from "../services/users/followers/followUsers.service";
+import unfollowUsersService from "../services/users/followers/unfollowUsers.service";
+import getFollowingUsersService from "../services/users/followers/getFollowingUsers.service";
+import getFollowersUsersService from "../services/users/followers/getFollowersUsers.service";
 
 const getUsersController = async (req: Request, res: Response) => {
 	const id = Number(req.params.id);
@@ -46,10 +49,50 @@ const deleteUsersController = async (req: Request, res: Response) => {
 	return res.status(204).send();
 };
 
+// User Followers controller
+const followUserController = async (req: Request, res: Response) => {
+	const id = Number(req.params.id);
+
+	const userFollowed = await followUsersService({
+		followerId: id,
+		userId: req.user.id,
+	});
+
+	return res.status(200).json(userFollowed);
+};
+
+const unfollowUserController = async (req: Request, res: Response) => {
+	const id = Number(req.params.id);
+
+	await unfollowUsersService(id);
+
+	return res.status(204).send();
+};
+
+const getFollowingUserController = async (req: Request, res: Response) => {
+	const id = Number(req.params.id);
+
+	const userFollowing = await getFollowingUsersService(id);
+
+	return res.status(200).json(userFollowing);
+};
+
+const getFollowersUserController = async (req: Request, res: Response) => {
+	const id = Number(req.params.id);
+
+	const userFollowing = await getFollowersUsersService(id);
+
+	return res.status(200).json(userFollowing);
+};
+
 export {
 	getUsersController,
 	getAllUsersController,
 	createUsersController,
 	updateUsersController,
 	deleteUsersController,
+	getFollowingUserController,
+	getFollowersUserController,
+	followUserController,
+	unfollowUserController,
 };
