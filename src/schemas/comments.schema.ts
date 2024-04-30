@@ -4,10 +4,10 @@ import { usersWithoutPassSchema } from "./users.schema";
 const commentsSchema = z.object({
   id: z.number(),
   message: z.string(),
-  createdAt: z.date(),
-  updatedAt: z.date(),
   postId: z.number(),
   userId: z.number(),
+  createdAt: z.date(),
+  updatedAt: z.date(),
 });
 
 const commentUserSchema = commentsSchema.extend({
