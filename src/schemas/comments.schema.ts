@@ -16,8 +16,6 @@ const commentUserSchema = commentsSchema.extend({
 
 const commentUserNoUserIdSchema = commentsSchema
   .extend({
-    like: z.number(),
-    dislike: z.number(),
     User: usersWithoutPassSchema,
   })
   .omit({ userId: true });
@@ -34,7 +32,6 @@ const commentsNoIDsSchema = commentsCreateSchema.omit({
 });
 
 const commentsUpdateSchema = commentsCreateSchema
-  .extend({ likes: z.number(), deslikes: z.number() })
   .partial();
 
 export {

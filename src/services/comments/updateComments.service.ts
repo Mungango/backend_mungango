@@ -1,7 +1,7 @@
 import { AppError } from "../../errors";
 import { iCommentCreateNoIDs } from "../../interfaces/comment.interface";
 import Comment from "../../models/Comment";
-import { commentsUpdateSchema } from "../../schemas/comments.schema";
+import { commentsSchema } from "../../schemas/comments.schema";
 
 const updateCommentsService = async (
 	id: number,
@@ -20,7 +20,7 @@ const updateCommentsService = async (
 
 	const updatedComment = await Comment.findOne({ where: { id } });
 
-	return commentsUpdateSchema.parse(updatedComment);
+	return commentsSchema.parse(updatedComment);
 };
 
 export default updateCommentsService;
