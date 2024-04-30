@@ -9,8 +9,6 @@ import sequelize from "../db/connect";
 class Comment extends Model<iComment, iCommentCreate> {
 	declare id: number;
 	declare message: string;
-	declare likes: number;
-	declare deslikes: number;
 	declare userId: number;
 	declare postId: number;
 }
