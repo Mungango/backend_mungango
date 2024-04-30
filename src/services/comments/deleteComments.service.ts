@@ -5,9 +5,9 @@ const deleteCommentsService = async (
 	id: number,
 	userId: number
 ): Promise<void> => {
-	const commentData: any = await Comment.findOne({ where: { id } });
+	const commentData = await Comment.findOne({ where: { id } });
 
-	if (commentData.UserId != userId) {
+	if (commentData?.dataValues.userId != userId) {
 		throw new AppError("Você não é o proprietário desse comentário!", 403);
 	}
 
