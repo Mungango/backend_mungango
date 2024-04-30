@@ -10,6 +10,7 @@ import { handleError } from "./errors";
 const app: Application = express();
 app.use(json());
 
+app.get("/", (req, res) => res.send("Express on Vercel"));
 app.use("/users", userRoutes);
 app.use("/posts", postRoutes);
 app.use("/login", loginRoutes);
