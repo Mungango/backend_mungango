@@ -6,7 +6,8 @@
 	"type": "commonjs",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
-		"dev": "ts-node-dev --ignore-watch node_modules --rs --cls src/server.ts"
+		"dev": "ts-node-dev --ignore-watch node_modules --rs --cls src/server.ts",
+		"doc": "insomnia-documenter --config insomnia.json --output doc/"
 	},
 	"author": "",
 	"license": "ISC",
