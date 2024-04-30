@@ -6,11 +6,18 @@ import loginRoutes from "./routes/login.routes";
 import uploadRoutes from "./routes/upload.routes";
 import commentRoutes from "./routes/comment.routes";
 import { handleError } from "./errors";
+import path from "path";
 
 const app: Application = express();
 app.use(json());
 
-app.get("/", (req, res) => res.send("Express on Vercel"));
+app.use(express.static(path.join(__dirname, "..", "docs")));
+
+// Rota para renderizar o index.html quando acessarem a raiz '/'
+app.get("/", (req, res) => {
+	res.sendFile(path.join(__dirname, "..", "docs", "index.html"));
+});
+
 app.use("/users", userRoutes);
 app.use("/posts", postRoutes);
 app.use("/login", loginRoutes);
