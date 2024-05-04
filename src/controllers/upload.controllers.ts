@@ -32,7 +32,6 @@ const uploadImagePostController = async (req: Request, res: Response) => {
 	const upload = await saveImage(req.file!.path); 
 
 	const postId = Number(req.params.id);
-	console.log(postId);
 
 	const uploadedImage = await uploadService(postId, upload);
 

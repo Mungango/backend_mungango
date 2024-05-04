@@ -6,11 +6,13 @@ import loginRoutes from "./routes/login.routes";
 import uploadRoutes from "./routes/upload.routes";
 import commentRoutes from "./routes/comment.routes";
 import { handleError } from "./errors";
+import cors from "cors";
 import path from "path";
 import iconRoutes from "./routes/icon.routes";
 
 const app: Application = express();
 app.use(json());
+app.use(cors());
 
 app.use(express.static(path.join(__dirname, "..", "docs")));
 
