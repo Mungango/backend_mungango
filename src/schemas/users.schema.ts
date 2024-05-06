@@ -3,6 +3,10 @@ import { z } from "zod";
 const usersSchema = z.object({
 	id: z.number(),
 	name: z.string().min(3).max(255),
+	username: z.string().min(3).max(23),
+	bio: z.string().nullish(),
+	icon: z.string(),
+	role: z.enum(["user", "admin"]).default("user"),
 	image: z.string().nullish(),
 	phone: z.string().max(11),
 	email: z.string().email().max(55),

@@ -7,6 +7,10 @@ import { iUser, iUserCreate } from "../interfaces/user.interface";
 class User extends Model<iUser, iUserCreate> {
 	declare id: number;
 	declare name: string;
+	declare username: string;
+	declare bio: string;
+	declare icon: string;
+	declare role: string;
 	declare image: string | null;
 	declare phone: string;
 	declare email: string;
@@ -23,6 +27,24 @@ User.init(
 			validate: {
 				len: [3, 255], // mínimo de 3 caracteres, máximo de 50 caracteres
 			},
+		},
+		username: {
+			type: DataTypes.STRING,
+			validate: {
+				len: [3, 23],
+			},
+		},
+		bio: {
+			type: DataTypes.TEXT,
+			allowNull: true,
+		},
+		icon: {
+			type: DataTypes.STRING,
+		},
+		role: {
+			type: DataTypes.ENUM,
+			values: ["user", "admin"],
+			defaultValue: "user",
 		},
 		image: {
 			type: DataTypes.STRING,
