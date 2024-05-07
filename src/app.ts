@@ -24,7 +24,7 @@ app.get("/", (req, res) => {
 app.use("/users", userRoutes);
 app.use("/posts", postRoutes);
 app.use("/login", loginRoutes);
-app.use("/upload", uploadRoutes);
+app.use("/comment", commentRoutes);
 app.use("/upload", uploadRoutes);
 app.use("/icon", iconRoutes);
 
