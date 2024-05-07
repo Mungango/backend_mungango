@@ -7,6 +7,7 @@ import {
   getPostsController,
   updatePostsController,
   likePostsController,
+  userPostsController,
 } from "../controllers/post.controllers";
 import ensureExistsMiddleware from "../middlewares/ensureExists.middleware";
 import ensureDataIsValidMiddleware from "../middlewares/ensureDataIsValid.middleware";
@@ -15,6 +16,7 @@ import { postsCreateSchema, postsUpdateSchema } from "../schemas/posts.schema";
 
 import Post from "../models/Post";
 import ensureTokenIsValidMiddleware from "../middlewares/ensureTokenIsValid.middleware";
+import User from "../models/User";
 
 const postRoutes: Router = Router();
 
@@ -54,5 +56,11 @@ postRoutes.post(
   ensureTokenIsValidMiddleware,
   likePostsController
 ); //Like e deslike
+
+postRoutes.get(
+	"/user/:id",
+	ensureExistsMiddleware(User, "Usuário não encontrado!"),
+	userPostsController
+);
 
 export default postRoutes;
