@@ -1,6 +1,8 @@
 import { z } from "zod";
 import { usersWithoutPassSchema } from "./users.schema";
+//import { comments } from "./comments.schema";
 import { uploadSchema } from "./upload.schema";
+import User from "../models/User";
 
 const postsSchema = z.object({
 	id: z.number(),
