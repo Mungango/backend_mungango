@@ -4,6 +4,7 @@ import { compare } from "bcrypt";
 import { AppError } from "../errors";
 import { iLogin } from "../interfaces/login.interface";
 import "dotenv/config";
+import { usersWithoutPassSchema } from "../schemas/users.schema";
 
 const loginService = async (loginDate: iLogin) => {
 	const user = await User.findOne({
@@ -30,7 +31,7 @@ const loginService = async (loginDate: iLogin) => {
 		subject: user.id.toString(),
 	});
 
-	return { accessToken: token, user };
+	return { accessToken: token, user: usersWithoutPassSchema.parse(user) };
 };
 
 export default loginService;
