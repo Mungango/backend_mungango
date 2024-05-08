@@ -28,13 +28,13 @@ const postsCreateSchema = postsSchema
 		createdAt: true,
 		updatedAt: true,
 	})
-	.extend({
-		images: z
-			.string()
-			.array()
-			.min(1, "Deve ser adicionada pelo menos 1 imagem")
-			.max(5, "Só é permitido no máximo 5 imagens"),
-	});
+	// .extend({
+	// 	images: z
+	// 		.string()
+	// 		.array()
+	// 		.min(1, "Deve ser adicionada pelo menos 1 imagem")
+	// 		.max(5, "Só é permitido no máximo 5 imagens"),
+	// });
 
 const postsUpdateSchema = postsCreateSchema.partial();
 
