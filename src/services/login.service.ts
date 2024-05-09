@@ -5,6 +5,8 @@ import { AppError } from "../errors";
 import { iLogin } from "../interfaces/login.interface";
 import "dotenv/config";
 import { usersWithoutPassSchema } from "../schemas/users.schema";
+import getFollowingUsersService from "./users/followers/getFollowingUsers.service";
+import getFollowersUsersService from "./users/followers/getFollowersUsers.service";
 
 const loginService = async (loginDate: iLogin) => {
 	const user = await User.findOne({
@@ -17,6 +19,9 @@ const loginService = async (loginDate: iLogin) => {
 	if (!user) {
 		throw new AppError("Credenciais inválidas", 401);
 	}
+
+	const following = await getFollowingUsersService(user.id),
+		followers = await getFollowersUsersService(user.id);
 
 	const matchPass = await compare(loginDate.password, user.password);
 
@@ -31,7 +36,13 @@ const loginService = async (loginDate: iLogin) => {
 		subject: user.id.toString(),
 	});
 
-	return { accessToken: token, user: usersWithoutPassSchema.parse(user) };
+	const userWithFollower = {
+		...usersWithoutPassSchema.parse(user),
+		Following: following,
+		Followers: followers,
+	};
+
+	return { accessToken: token, User: userWithFollower };
 };
 
 export default loginService;

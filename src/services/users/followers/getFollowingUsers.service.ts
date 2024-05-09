@@ -14,7 +14,7 @@ const getFollowingUsersService = async (id: number) => {
 
 	return {
 		count: checkFollowing.count,
-		Following: usersWithoutPassSchema.array().parse(following),
+		raw: usersWithoutPassSchema.array().parse(following),
 	};
 };
 
