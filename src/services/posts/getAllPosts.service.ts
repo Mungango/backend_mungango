@@ -35,7 +35,9 @@ const getAllPostsService = async () => {
 		})
 	);
 
-	return postUserImageLikeSchema.array().parse(postsWithLikesAndDislikes);
+	return postUserImageLikeSchema
+		.array()
+		.parse(postsWithLikesAndDislikes.reverse());
 };
 
 export default getAllPostsService;
