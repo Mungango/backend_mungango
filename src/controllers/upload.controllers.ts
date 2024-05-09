@@ -40,7 +40,6 @@ const uploadImagePostController = async (req: Request, res: Response) => {
 
 const uploadImageController = async (req: Request, res: Response) => {
 	const upload = await saveImage(req.file!.path);
-	console.log(req.file);
 
 	const parsedUpload = uploadWithoutIdSchema.parse({
 		publicId: upload.public_id,
