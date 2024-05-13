@@ -1,18 +1,19 @@
 import Image from "../../models/Image";
 import Post from "../../models/Post";
-import User from "../../models/User";
+import Comment from "../../models/Comment";
 import LikesPost from "../../models/likesPost";
 
 import { postUserImageLikeSchema } from "../../schemas/posts.schema";
+import User from "../../models/User";
 
-const getAllPostsService = async () => {
+const getUserAllPostsService = async (id: number) => {
 	const retrivedPosts = await Post.findAll({
 		include: [
 			{
 				model: User,
-				where: { deletedAt: null },
+				where: { deletedAt: null, id },
 			},
-			{ model: Image },
+			{ model: Image }, //inscluindo o model de Image e User de acordo com os posts
 		],
 	});
 
@@ -35,9 +36,7 @@ const getAllPostsService = async () => {
 		})
 	);
 
-	return postUserImageLikeSchema
-		.array()
-		.parse(postsWithLikesAndDislikes.reverse());
+	return postUserImageLikeSchema.array().parse(postsWithLikesAndDislikes);
 };
 
-export default getAllPostsService;
+export default getUserAllPostsService;

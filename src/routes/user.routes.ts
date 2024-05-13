@@ -21,8 +21,8 @@ const userRoutes = Router();
 userRoutes.get("", getAllUsersController);
 
 userRoutes.get(
-	"/:id",
-	ensureExistsMiddleware(User, "Usuário"),
+	"/:username",
+	// ensureExistsMiddleware(User, "Usuário"),
 	getUsersController
 );
 

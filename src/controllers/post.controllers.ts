@@ -7,68 +7,80 @@ import getPostsService from "../services/posts/getPosts.service";
 import updatePostsService from "../services/posts/updatePosts.service";
 import likePostsService from "../services/posts/likePosts.service";
 import { iPostCreate, iPostUpdate } from "../interfaces/post.interface";
-import { ilikesPostCreate, ilikesPostUpdate } from "../interfaces/likesPost.interface";
+import {
+	ilikesPostCreate,
+	ilikesPostUpdate,
+} from "../interfaces/likesPost.interface";
 import likeAndDislike from "../middlewares/likeAndDislike.middleware";
 import LikesPost from "../models/likesPost";
+import getUserAllPostsService from "../services/posts/getUserAllPosts.service";
 
 const getPostsController = async (req: Request, res: Response) => {
-  const id = Number(req.params.id);
+	const id = Number(req.params.id);
 
-  const retrivedPost = await getPostsService(id);
+	const retrivedPost = await getPostsService(id);
 
-  return res.status(200).json(retrivedPost);
+	return res.status(200).json(retrivedPost);
 };
 
 const getAllPostsController = async (req: Request, res: Response) => {
-  const allPosts = await getAllPostsService();
+	const allPosts = await getAllPostsService();
 
-  return res.status(200).json(allPosts);
+	return res.status(200).json(allPosts);
 };
 
 const createPostsController = async (req: Request, res: Response) => {
-  const payload: iPostCreate = req.body,
-    userId = Number(req.user.id);
+	const payload: iPostCreate = req.body,
+		userId = Number(req.user.id);
 
-  const createdPost = await createPostsService(userId, payload);
-  return res.status(201).json(createdPost);
+	const createdPost = await createPostsService(userId, payload);
+	return res.status(201).json(createdPost);
 };
 
 const updatePostsController = async (req: Request, res: Response) => {
-  const payload: iPostUpdate = req.body,
-    id = Number(req.params.id);
-  const userId = Number(req.user.id);
+	const payload: iPostUpdate = req.body,
+		id = Number(req.params.id);
+	const userId = Number(req.user.id);
 
-  const updatedPost = await updatePostsService(id, payload, userId);
+	const updatedPost = await updatePostsService(id, payload, userId);
 
-  return res.status(200).json(updatedPost);
+	return res.status(200).json(updatedPost);
 };
 
 const deletePostsController = async (req: Request, res: Response) => {
-  const id = Number(req.params.id);
-  const userId = Number(req.user.id);
+	const id = Number(req.params.id);
+	const userId = Number(req.user.id);
 
-  await deletePostsService(id, userId);
+	await deletePostsService(id, userId);
 
-  return res.status(204).send();
+	return res.status(204).send();
 };
 
 const likePostsController = async (req: Request, res: Response) => {
-  const payload = req.body;
-  const id = Number(req.params.id);
-  const userId = Number(req.user.id);
+	const payload = req.body;
+	const id = Number(req.params.id);
+	const userId = Number(req.user.id);
 
-  const data: ilikesPostCreate = { ownerId: id, userId, ...payload};
+	const data: ilikesPostCreate = { ownerId: id, userId, ...payload };
 
-  await likeAndDislike(LikesPost, "post", data);
+	await likeAndDislike(LikesPost, "post", data);
 
-  return res.status(204).send();
+	return res.status(204).send();
+};
+
+const userPostsController = async (req: Request, res: Response) => {
+	const userId = Number(req.params.id);
+	const userAllPosts = await getUserAllPostsService(userId);
+
+	return res.status(200).json(userAllPosts);
 };
 
 export {
-  getPostsController,
-  getAllPostsController,
-  createPostsController,
-  updatePostsController,
-  deletePostsController,
-  likePostsController,
+	getPostsController,
+	getAllPostsController,
+	createPostsController,
+	updatePostsController,
+	deletePostsController,
+	likePostsController,
+	userPostsController,
 };

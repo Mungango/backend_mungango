@@ -29,14 +29,14 @@ const getImageController = async (req: Request, res: Response) => {
 };
 
 const uploadImagePostController = async (req: Request, res: Response) => {
-	const upload = await saveImage(req.file!.path); 
+	const upload = await saveImage(req.file!.path);
 
 	const postId = Number(req.params.id);
 
 	const uploadedImage = await uploadService(postId, upload);
 
 	return res.status(200).json(uploadedImage);
-}; 
+};
 
 const uploadImageController = async (req: Request, res: Response) => {
 	const upload = await saveImage(req.file!.path);

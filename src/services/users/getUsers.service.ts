@@ -1,15 +1,31 @@
+import { AppError } from "../../errors";
 import { iUsersWithoutPass } from "../../interfaces/user.interface";
 import User from "../../models/User";
 import { usersWithoutPassSchema } from "../../schemas/users.schema";
+import getFollowersUsersService from "./followers/getFollowersUsers.service";
+import getFollowingUsersService from "./followers/getFollowingUsers.service";
 
-const getUsersService = async (id: number): Promise<iUsersWithoutPass> => {
+const getUsersService = async (
+	username: string
+): Promise<iUsersWithoutPass> => {
 	const retrivedUser = await User.findOne({
-		where: { id, deletedAt: null },
+		where: { username, deletedAt: null },
 	});
 
-	const userWithoutPass: iUsersWithoutPass = usersWithoutPassSchema.parse(retrivedUser);
+	if (!retrivedUser) {
+		throw new AppError("Usuário não encontrado", 404);
+	}
 
-	return userWithoutPass;
+	const following = await getFollowingUsersService(retrivedUser.id),
+		followers = await getFollowersUsersService(retrivedUser.id);
+
+	const userWithFollower = {
+		...usersWithoutPassSchema.parse(retrivedUser),
+		Following: following,
+		Followers: followers,
+	};
+
+	return userWithFollower;
 };
 
 export default getUsersService;

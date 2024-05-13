@@ -11,9 +11,9 @@ import getFollowingUsersService from "../services/users/followers/getFollowingUs
 import getFollowersUsersService from "../services/users/followers/getFollowersUsers.service";
 
 const getUsersController = async (req: Request, res: Response) => {
-	const id = Number(req.params.id);
+	const username = req.params.username;
 
-	const retrivedUser = await getUsersService(id);
+	const retrivedUser = await getUsersService(username);
 
 	return res.status(200).json(retrivedUser);
 };
