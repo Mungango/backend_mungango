@@ -16,25 +16,25 @@ const postUserImageLikeSchema = postsSchema
 	.extend({
 		like: z.number(),
 		dislike: z.number(),
+		comment: z.number(),
 		Images: uploadSchema.array(),
 		User: usersWithoutPassSchema,
 	})
 	.omit({ userId: true });
 
-const postsCreateSchema = postsSchema
-	.omit({
-		id: true,
-		userId: true,
-		createdAt: true,
-		updatedAt: true,
-	})
-	// .extend({
-	// 	images: z
-	// 		.string()
-	// 		.array()
-	// 		.min(1, "Deve ser adicionada pelo menos 1 imagem")
-	// 		.max(5, "Só é permitido no máximo 5 imagens"),
-	// });
+const postsCreateSchema = postsSchema.omit({
+	id: true,
+	userId: true,
+	createdAt: true,
+	updatedAt: true,
+});
+// .extend({
+// 	images: z
+// 		.string()
+// 		.array()
+// 		.min(1, "Deve ser adicionada pelo menos 1 imagem")
+// 		.max(5, "Só é permitido no máximo 5 imagens"),
+// });
 
 const postsUpdateSchema = postsCreateSchema.partial();
 
