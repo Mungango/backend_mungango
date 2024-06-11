@@ -21,7 +21,6 @@ const getUsersController = async (req: Request, res: Response) => {
 
 const getUsersIdController = async (req: Request, res: Response) => {
 	const id = Number(req.params.id);
-
 	const retrivedUser = await getUsersIdService(id);
 
 	return res.status(200).json(retrivedUser);

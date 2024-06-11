@@ -10,12 +10,12 @@ const getUsersIdService = async (id: number): Promise<iUsersWithoutPass> => {
 		where: { id, deletedAt: null },
 	});
 
-	if (!retrivedUser) {
-		throw new AppError("Usuário não encontrado", 404);
-	}
+	// if (!retrivedUser) {
+	// 	throw new AppError("Usuário não encontrado", 404);
+	// }
 
-	const following = await getFollowingUsersService(retrivedUser.id),
-		followers = await getFollowersUsersService(retrivedUser.id);
+	const following = await getFollowingUsersService(retrivedUser!.id),
+		followers = await getFollowersUsersService(retrivedUser!.id);
 
 	const userWithFollower = {
 		...usersWithoutPassSchema.parse(retrivedUser),

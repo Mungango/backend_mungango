@@ -28,10 +28,9 @@ userRoutes.get(
 ); // buscar um usuario por username
 // arrumar o middlware de de existencia no banco ou fazer a busca no proprio sevice
 
-
 userRoutes.get(
-	"/:id",
-	// ensureExistsMiddleware(User, "Usuário"),
+	"/id/:id",
+	ensureExistsMiddleware(User, "Usuário"),
 	getUsersIdController
 ); // buscar um usuario por id
 
