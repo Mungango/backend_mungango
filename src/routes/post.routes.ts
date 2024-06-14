@@ -8,6 +8,7 @@ import {
   updatePostsController,
   likePostsController,
   userPostsController,
+  getLikePostsController,
 } from "../controllers/post.controllers";
 import ensureExistsMiddleware from "../middlewares/ensureExists.middleware";
 import ensureDataIsValidMiddleware from "../middlewares/ensureDataIsValid.middleware";
