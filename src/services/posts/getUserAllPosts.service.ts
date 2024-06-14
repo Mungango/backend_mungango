@@ -18,6 +18,7 @@ const getUserAllPostsService = async (
 			},
 			{ model: Image }, //inscluindo o model de Image e User de acordo com os posts
 		],
+		order: [["createdAt", "DESC"]], // Ordenar os posts pelo campo 'createdAt' em ordem decrescente
 	});
 
 	// Para cada post, obtemos as contagens de likes e dislikes

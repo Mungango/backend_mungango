@@ -9,19 +9,21 @@ const getAllCommentsService = async (
   postId: number
 ): Promise<iCommentUserNoUserId[]> => {
   const retrivedComments = await Comment.findAll({
-    where: {
-      postId,
-    },
-    include: [
-      {
-        model: User,
-        where: { deletedAt: null },
-      },
-      {
-        model: Post,
-      },
-    ],
-  });
+			limit: 10,
+			where: {
+				postId,
+			},
+			include: [
+				{
+					model: User,
+					where: { deletedAt: null },
+				},
+				{
+					model: Post,
+				},
+			],
+			order: [["createdAt", "DESC"]],
+		});
 
   // Para cada post, obtemos as contagens de likes e dislikes
   const commentsWithLikesAndDislikes = await Promise.all(

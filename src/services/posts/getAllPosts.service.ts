@@ -8,6 +8,7 @@ import { postUserImageLikeSchema } from "../../schemas/posts.schema";
 
 const getAllPostsService = async () => {
 	const retrivedPosts = await Post.findAll({
+		limit: 10,
 		include: [
 			{
 				model: User,
@@ -15,6 +16,7 @@ const getAllPostsService = async () => {
 			},
 			{ model: Image },
 		],
+		order: [["createdAt", "DESC"]],
 	});
 
 	// Para cada post, obtemos as contagens de likes e dislikes
@@ -45,7 +47,7 @@ const getAllPostsService = async () => {
 
 	return postUserImageLikeSchema
 		.array()
-		.parse(postsWithLikesDislikesAndComments.reverse());
+		.parse(postsWithLikesDislikesAndComments);
 };
 
 export default getAllPostsService;

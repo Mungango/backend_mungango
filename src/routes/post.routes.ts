@@ -1,14 +1,13 @@
 import { Router } from "express";
 
 import {
-	createPostsController,
-	deletePostsController,
-	getAllPostsController,
-	getPostsController,
-	updatePostsController,
-	likePostsController,
-	userPostsController,
-	getLikePostsController,
+  createPostsController,
+  deletePostsController,
+  getAllPostsController,
+  getPostsController,
+  updatePostsController,
+  likePostsController,
+  userPostsController,
 } from "../controllers/post.controllers";
 import ensureExistsMiddleware from "../middlewares/ensureExists.middleware";
 import ensureDataIsValidMiddleware from "../middlewares/ensureDataIsValid.middleware";
@@ -52,10 +51,10 @@ postRoutes.delete(
 );
 
 postRoutes.post(
-	"/like/:id",
-	ensureExistsMiddleware(Post, "Post"),
-	ensureTokenIsValidMiddleware,
-	likePostsController
+  "/like/:id",
+  ensureExistsMiddleware(Post, "Post"),
+  ensureTokenIsValidMiddleware,
+  likePostsController
 ); //Like e deslike
 
 postRoutes.get(
