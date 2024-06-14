@@ -70,11 +70,10 @@ const likePostsController = async (req: Request, res: Response) => {
 };
 
 const getLikePostsController = async (req: Request, res: Response) => {
-	const payload = req.body;
 	const id = Number(req.params.id);
 	const userId = Number(req.user.id);
 
-	const data: ilikesPostCreate = { ownerId: id, userId, ...payload };
+	const data: { ownerId: number; userId: number } = { ownerId: id, userId };
 
 	const like = await getLikePostsService(data);
 
