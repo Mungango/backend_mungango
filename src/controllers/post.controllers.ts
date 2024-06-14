@@ -14,6 +14,7 @@ import {
 import likeAndDislike from "../middlewares/likeAndDislike.middleware";
 import LikesPost from "../models/likesPost";
 import getUserAllPostsService from "../services/posts/getUserAllPosts.service";
+import getLikePostsService from "../services/posts/getLikePosts.service";
 
 const getPostsController = async (req: Request, res: Response) => {
 	const id = Number(req.params.id);
@@ -68,6 +69,18 @@ const likePostsController = async (req: Request, res: Response) => {
 	return res.status(204).send();
 };
 
+const getLikePostsController = async (req: Request, res: Response) => {
+	const payload = req.body;
+	const id = Number(req.params.id);
+	const userId = Number(req.user.id);
+
+	const data: ilikesPostCreate = { ownerId: id, userId, ...payload };
+
+	const like = await getLikePostsService(data);
+
+	return res.status(200).json(like);
+};
+
 const userPostsController = async (req: Request, res: Response) => {
 	const userId = Number(req.params.id);
 	const userAllPosts = await getUserAllPostsService(userId);
@@ -81,6 +94,7 @@ export {
 	createPostsController,
 	updatePostsController,
 	deletePostsController,
+	getLikePostsController,
 	likePostsController,
 	userPostsController,
 };

@@ -58,7 +58,6 @@ const likeCommentsController = async (req: Request, res: Response) => {
 
   const data = { ownerId: id, userId, ...payload };
   
-
   await likeAndDislike(LikesComment, "comentário", data);
 
   return res.status(204).send();

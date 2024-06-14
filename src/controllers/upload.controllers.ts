@@ -7,7 +7,8 @@ import { Request, Response } from "express";
 const saveImage = async (path: string) => {
 	const upload = await cloudinary.uploader.upload(
 		path,
-		(error: any, result: { image: string }) => result
+		{ width: 400, height: 400, crop: "fill" },
+		(error: any, result) => result
 	);
 	// cloudinary.uploader.upload é o método que utilizamos para o upload
 	// req.file.path é o caminho da nossa imagem salva pelo multer na pasta upload
