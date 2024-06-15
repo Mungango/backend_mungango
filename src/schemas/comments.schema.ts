@@ -2,43 +2,44 @@ import { z } from "zod";
 import { usersWithoutPassSchema } from "./users.schema";
 
 const commentsSchema = z.object({
-  id: z.number(),
-  message: z.string(),
-  postId: z.number(),
-  userId: z.number(),
-  createdAt: z.date(),
-  updatedAt: z.date(),
+	id: z.number(),
+	message: z.string(),
+	postId: z.number(),
+	userId: z.number(),
+	createdAt: z.date(),
+	updatedAt: z.date(),
 });
 
 const commentUserSchema = commentsSchema.extend({
-  User: usersWithoutPassSchema,
+	User: usersWithoutPassSchema,
 });
 
 const commentUserNoUserIdSchema = commentsSchema
-  .extend({
-    User: usersWithoutPassSchema,
-  })
-  .omit({ userId: true });
+	.extend({
+		like: z.number(),
+		dislike: z.number(),
+		User: usersWithoutPassSchema,
+	})
+	.omit({ userId: true });
 
 const commentsCreateSchema = commentsSchema.omit({
-  id: true,
-  createdAt: true,
-  updatedAt: true,
+	id: true,
+	createdAt: true,
+	updatedAt: true,
 });
 
 const commentsNoIDsSchema = commentsCreateSchema.omit({
-  userId: true,
-  postId: true,
+	userId: true,
+	postId: true,
 });
 
-const commentsUpdateSchema = commentsCreateSchema
-  .partial();
+const commentsUpdateSchema = commentsCreateSchema.partial();
 
 export {
-  commentsSchema,
-  commentUserSchema,
-  commentsNoIDsSchema,
-  commentsCreateSchema,
-  commentsUpdateSchema,
-  commentUserNoUserIdSchema,
+	commentsSchema,
+	commentUserSchema,
+	commentsNoIDsSchema,
+	commentsCreateSchema,
+	commentsUpdateSchema,
+	commentUserNoUserIdSchema,
 };
