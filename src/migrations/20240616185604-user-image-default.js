@@ -18,6 +18,12 @@ module.exports = {
 	},
 
 	async down(queryInterface, Sequelize) {
+		await queryInterface.sequelize.query(`
+			UPDATE "Users"
+			SET "image" = NULL
+			WHERE "image" IS 'https://res.cloudinary.com/ddhbhbxcs/image/upload/qpgpbfl307pxx8wu3hpy?_a=BAMABmLR0';
+		  `);
+
 		await queryInterface.changeColumn("Users", "image", {
 			type: Sequelize.STRING,
 			allowNull: true,

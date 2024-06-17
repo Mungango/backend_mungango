@@ -49,7 +49,9 @@ User.init(
 		},
 		image: {
 			type: DataTypes.STRING,
-			allowNull: true,
+			allowNull: false,
+			defaultValue:
+				"https://res.cloudinary.com/ddhbhbxcs/image/upload/qpgpbfl307pxx8wu3hpy?_a=BAMABmLR0",
 		},
 		phone: {
 			type: DataTypes.STRING(11),

@@ -1,7 +1,5 @@
 import { AppError } from "../errors";
-import { NextFunction, Request, Response } from "express";
 import { ilikesPostCreate } from "../interfaces/likesPost.interface";
-import { where } from "sequelize";
 
 const likeAndDislike = async (
   model: any,
