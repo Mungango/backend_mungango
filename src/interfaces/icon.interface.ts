@@ -1,11 +1,12 @@
 import { z } from "zod";
-import { iconSchema,
+import {
+	iconSchema,
 	iconWithoutIdSchema,
-	iconSchemaWithPostId,
-	externalIconApiResponseSchema} from "../schemas/icon.schema" 
+	externalIconApiResponseSchema,
+} from "../schemas/icon.schema";
 
 type iIcon = z.infer<typeof iconSchema>;
-type iIconCreate = z.infer<typeof iconSchemaWithPostId>;
+type iIconCreate = z.infer<typeof iconWithoutIdSchema>;
 type iIconUpdate = z.infer<typeof iconWithoutIdSchema>;
 type iExternalIconApiResponse = z.infer<typeof externalIconApiResponseSchema>;
 

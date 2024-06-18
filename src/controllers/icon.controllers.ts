@@ -29,24 +29,22 @@ const getIconController = async (req: Request, res: Response) => {
 };
 
 const uploadIconPostController = async (req: Request, res: Response) => {
-	const icon = await saveIcon(req.file!.path); 
+	const icon = await saveIcon(req.file!.path);
 
-	const userId = Number(req.params.id);
-
-	const uploadedIcon = await iconService(userId, icon);
+	const uploadedIcon = await iconService(icon);
 
 	return res.status(200).json(uploadedIcon);
-}; 
+};
 
 const uploadIconController = async (req: Request, res: Response) => {
 	const icon = await saveIcon(req.file!.path);
 
 	const parsedUpload = iconWithoutIdSchema.parse({
-    publicId: icon.public_id,
-    secureUrl: icon.secure_url,
-    createdAt: new Date(icon.created_at),
-    ...icon,
-  });
+		publicId: icon.public_id,
+		secureUrl: icon.secure_url,
+		createdAt: new Date(icon.created_at),
+		...icon,
+	});
 
 	return res.status(200).json(parsedUpload);
 };

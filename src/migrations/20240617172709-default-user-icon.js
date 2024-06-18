@@ -4,7 +4,7 @@ module.exports = {
 	up: async (queryInterface, Sequelize) => {
 		await queryInterface.sequelize.query(`
 			UPDATE "Users"
-			SET "icone" = 'http://res.cloudinary.com/ddhbhbxcs/image/upload/v1718593942/fwrscthpnmx4u3dz1gzo.svg';
+			SET "icon" = 'http://res.cloudinary.com/ddhbhbxcs/image/upload/v1718593942/fwrscthpnmx4u3dz1gzo.svg';
 		  `);
 		// Remove a coluna userId da tabela Icons
 		await queryInterface.removeColumn("Icons", "userId");

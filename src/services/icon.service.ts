@@ -3,7 +3,6 @@ import Icon from "../models/Icon";
 import { iconWithoutIdSchema } from "../schemas/icon.schema";
 
 const iconService = async (
-	userId: number,
 	icon: iExternalIconApiResponse
 ) => {
 	const {
@@ -20,7 +19,7 @@ const iconService = async (
 		...uploadJson,
 	});
 
-	const createdIcon = await Icon.create({ ...parsedObject, userId });
+	const createdIcon = await Icon.create({ ...parsedObject });
 
 	return createdIcon;
 };
