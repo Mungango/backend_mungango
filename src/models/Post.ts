@@ -4,6 +4,7 @@ import sequelize from "../db/connect";
 import { iPost, iPostCreate } from "../interfaces/post.interface";
 
 import User from "./User";
+import Hashtag from "./Hashtag";
 
 class Post extends Model<iPost, iPostCreate> {
 	declare message: string;
@@ -31,5 +32,6 @@ Post.init(
 // Fazendo a relação de um para muitos
 Post.belongsTo(User, { foreignKey: "userId" });
 User.hasMany(Post, { foreignKey: "userId" });
+Post.belongsToMany(Hashtag, { through: "PostHashtag", foreignKey: "postId" });
 
 export default Post;
