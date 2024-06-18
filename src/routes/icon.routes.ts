@@ -1,5 +1,6 @@
 import {
 	getIconController,
+	getAllIconController,
 	uploadIconController,
 	uploadIconPostController,
 } from "../controllers/icon.controllers";
@@ -14,6 +15,8 @@ import upload from "../middlewares/uploadImage.middleware";
 const iconRoutes: Router = Router();
 
 iconRoutes.get("/:public_id", getIconController); // exibir um icon
+
+iconRoutes.get("", getAllIconController);
 
 iconRoutes.post(
 	"/:id",

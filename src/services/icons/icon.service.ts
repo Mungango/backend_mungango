@@ -1,10 +1,8 @@
-import { iExternalIconApiResponse } from "../interfaces/icon.interface";
-import Icon from "../models/Icon";
-import { iconWithoutIdSchema } from "../schemas/icon.schema";
+import { iExternalIconApiResponse } from "../../interfaces/icon.interface";
+import Icon from "../../models/Icon";
+import { iconWithoutIdSchema } from "../../schemas/icon.schema";
 
-const iconService = async (
-	icon: iExternalIconApiResponse
-) => {
+const iconService = async (icon: iExternalIconApiResponse) => {
 	const {
 		secure_url: secureUrl,
 		public_id: publicId,
