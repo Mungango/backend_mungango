@@ -6,6 +6,12 @@ import { hashtagSchema } from "../../schemas/hashtag.schema";
 const createHashtagService = async (
 	payload: iHashtagCreate
 ): Promise<iHashtag> => {
+	const existHashtag = await Hashtag.findOne({where: {name: payload.name}})
+
+	if(existHashtag){
+		return hashtagSchema.parse(existHashtag);
+	}
+
 	const createHashtag = await Hashtag.create({
 		...payload,
 	});
