@@ -21,7 +21,6 @@ Hashtag.init(
 			type: DataTypes.STRING,
 			unique: true,
 		},
-	
 	},
 	{ sequelize, modelName: "Hashtag" }
 );
@@ -30,6 +29,11 @@ Hashtag.init(
 Hashtag.belongsToMany(Post, {
 	through: "PostHashtag",
 	foreignKey: "hashtagId",
+});
+
+Post.belongsToMany(Hashtag, {
+	through: "PostHashtag",
+	foreignKey: "postId",
 });
 
 export default Hashtag;
