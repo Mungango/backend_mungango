@@ -9,6 +9,7 @@ import { handleError } from "./errors";
 import cors from "cors";
 import path from "path";
 import iconRoutes from "./routes/icon.routes";
+import hashtagRoutes from "./routes/hashtag.routes";
 
 const app: Application = express();
 app.use(json());
@@ -27,6 +28,7 @@ app.use("/login", loginRoutes);
 app.use("/comment", commentRoutes);
 app.use("/upload", uploadRoutes);
 app.use("/icon", iconRoutes);
+app.use("/hashtag", hashtagRoutes);
 
 // não colocar coisas a baixo desse "use"
 app.use(handleError);

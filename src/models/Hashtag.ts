@@ -21,6 +21,10 @@ Hashtag.init(
 			type: DataTypes.STRING,
 			unique: true,
 		},
+		createdAt: {
+			type: DataTypes.DATE,
+		},
+		updatedAt: { type: DataTypes.DATE },
 	},
 	{ sequelize, modelName: "Hashtag" }
 );
