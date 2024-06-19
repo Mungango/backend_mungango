@@ -8,6 +8,7 @@ import {
   updatePostsController,
   likePostsController,
   userPostsController,
+  getLikePostsController,
 } from "../controllers/post.controllers";
 import ensureExistsMiddleware from "../middlewares/ensureExists.middleware";
 import ensureDataIsValidMiddleware from "../middlewares/ensureDataIsValid.middleware";
@@ -23,31 +24,31 @@ const postRoutes: Router = Router();
 postRoutes.get("", getAllPostsController);
 
 postRoutes.get(
-  "/:id",
-  ensureExistsMiddleware(Post, "Post"),
-  getPostsController
+	"/:id",
+	ensureExistsMiddleware(Post, "Post"),
+	getPostsController
 );
 
 postRoutes.post(
-  "",
-  ensureDataIsValidMiddleware(postsCreateSchema),
-  ensureTokenIsValidMiddleware,
-  createPostsController
+	"",
+	ensureDataIsValidMiddleware(postsCreateSchema),
+	ensureTokenIsValidMiddleware,
+	createPostsController
 );
 
 postRoutes.patch(
-  "/:id",
-  ensureExistsMiddleware(Post, "Post"),
-  ensureDataIsValidMiddleware(postsUpdateSchema),
-  ensureTokenIsValidMiddleware,
-  updatePostsController
+	"/:id",
+	ensureExistsMiddleware(Post, "Post"),
+	ensureDataIsValidMiddleware(postsUpdateSchema),
+	ensureTokenIsValidMiddleware,
+	updatePostsController
 );
 
 postRoutes.delete(
-  "/:id",
-  ensureExistsMiddleware(Post, "Post"),
-  ensureTokenIsValidMiddleware,
-  deletePostsController
+	"/:id",
+	ensureExistsMiddleware(Post, "Post"),
+	ensureTokenIsValidMiddleware,
+	deletePostsController
 );
 
 postRoutes.post(
@@ -55,6 +56,13 @@ postRoutes.post(
   ensureExistsMiddleware(Post, "Post"),
   ensureTokenIsValidMiddleware,
   likePostsController
+); //Like e deslike
+
+postRoutes.get(
+	"/like/:id",
+	ensureExistsMiddleware(Post, "Post"),
+	ensureTokenIsValidMiddleware,
+	getLikePostsController
 ); //Like e deslike
 
 postRoutes.get(

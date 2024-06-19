@@ -10,10 +10,6 @@ const iconSchema = z.object({
 
 const iconWithoutIdSchema = iconSchema.omit({ id: true });
 
-const iconSchemaWithPostId = iconWithoutIdSchema.extend({
-	userId: z.number(),
-});
-
 const externalIconApiResponseSchema = z.object({
 	public_id: z.string(),
 	url: z.string(),
@@ -24,6 +20,5 @@ const externalIconApiResponseSchema = z.object({
 export {
 	iconSchema,
 	iconWithoutIdSchema,
-	iconSchemaWithPostId,
 	externalIconApiResponseSchema,
 };

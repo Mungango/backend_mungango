@@ -15,12 +15,12 @@ uploadRoutes.get("/:public_id", getImageController);
 
 uploadRoutes.post(
 	"/:id",
-	upload.single("image"),
+	upload.array("images"),
 	ensureExistsMiddleware(Post, "Post"),
 	uploadImagePostController
 );
 
-uploadRoutes.post("", upload.single("image"), uploadImageController);
+uploadRoutes.post("", upload.array("images"), uploadImageController);
 
 uploadRoutes.delete("/:resource_type", async (req, res) => {
 	await v2.uploader.destroy(req.params.resource_type);

@@ -7,11 +7,21 @@ import {
 	iUserUpdate,
 	iUsersWithoutPass,
 } from "../../interfaces/user.interface";
+import { Op } from "sequelize";
 
 const updateUsersService = async (
 	id: number,
 	payload: iUserUpdate
 ): Promise<iUsersWithoutPass> => {
+	// Verificar se o username já está em uso por outro usuário
+	const existingUser = await User.findOne({
+		where: { username: payload.username, id: { [Op.ne]: id } },
+	});
+
+	if (existingUser) {
+		throw new AppError("Username não disponível", 400);
+	}
+
 	const afterUser = await User.findOne({ where: { id } }),
 		oldPassword = afterUser!.password,
 		newPassword = payload?.password;

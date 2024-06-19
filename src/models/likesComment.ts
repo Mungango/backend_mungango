@@ -3,7 +3,8 @@ import { DataTypes, Model } from "sequelize";
 import sequelize from "../db/connect";
 
 import User from "./User";
-import Post from "./Post";
+import Comment from "./Comment";
+
 
 import {
   ilikesComment,
@@ -43,7 +44,7 @@ LikesComment.init(
 LikesComment.belongsTo(User, { foreignKey: "userId", onDelete: "cascade" });
 User.hasMany(LikesComment, { foreignKey: "userId" });
 
-LikesComment.belongsTo(Post, { foreignKey: "ownerId", onDelete: "cascade" });
-Post.hasMany(LikesComment, { foreignKey: "ownerId" });
+LikesComment.belongsTo(Comment, { foreignKey: "ownerId", onDelete: "cascade" });
+Comment.hasMany(LikesComment, { foreignKey: "ownerId" });
 
 export default LikesComment;

@@ -1,8 +1,9 @@
 import { v2 as cloudinary } from "cloudinary";
 import fs from "fs";
-import iconService from "../services/icon.service";
 import { iconWithoutIdSchema } from "../schemas/icon.schema";
 import { Request, Response } from "express";
+import getAllIconsService from "../services/icons/getAllIcon.service";
+import iconService from "../services/icons/icon.service";
 
 const saveIcon = async (path: string) => {
 	const icon = await cloudinary.uploader.upload(
@@ -27,28 +28,36 @@ const getIconController = async (req: Request, res: Response) => {
 	//http://res.cloudinary.com/dyo8h0ers/Icon/upload/kgnd2p0ne5xiypyqhw6c
 	res.status(200).json({ iconUrl: icon });
 };
+const getAllIconController = async (req: Request, res: Response) => {
+	const icons = await getAllIconsService();
+	//http://res.cloudinary.com/dyo8h0ers/Icon/upload/kgnd2p0ne5xiypyqhw6c
+	res.status(200).json(icons);
+};
 
 const uploadIconPostController = async (req: Request, res: Response) => {
-	const icon = await saveIcon(req.file!.path); 
+	const icon = await saveIcon(req.file!.path);
 
-	const userId = Number(req.params.id);
-
-	const uploadedIcon = await iconService(userId, icon);
+	const uploadedIcon = await iconService(icon);
 
 	return res.status(200).json(uploadedIcon);
-}; 
+};
 
 const uploadIconController = async (req: Request, res: Response) => {
 	const icon = await saveIcon(req.file!.path);
 
 	const parsedUpload = iconWithoutIdSchema.parse({
-    publicId: icon.public_id,
-    secureUrl: icon.secure_url,
-    createdAt: new Date(icon.created_at),
-    ...icon,
-  });
+		publicId: icon.public_id,
+		secureUrl: icon.secure_url,
+		createdAt: new Date(icon.created_at),
+		...icon,
+	});
 
 	return res.status(200).json(parsedUpload);
 };
 
-export { getIconController, uploadIconPostController, uploadIconController };
+export {
+	getIconController,
+	getAllIconController,
+	uploadIconPostController,
+	uploadIconController,
+};

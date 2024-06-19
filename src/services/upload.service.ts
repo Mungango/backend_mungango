@@ -4,25 +4,30 @@ import { uploadWithoutIdSchema } from "../schemas/upload.schema";
 
 const uploadService = async (
 	postId: number,
-	upload: iExternalUploadApiResponse
+	uploads: iExternalUploadApiResponse[]
 ) => {
-	const {
-		secure_url: secureUrl,
-		public_id: publicId,
-		created_at: createdAt,
-		...uploadJson
-	} = upload;
+	const createdImages = [];
 
-	const parsedObject = uploadWithoutIdSchema.parse({
-		publicId,
-		secureUrl,
-		createdAt: new Date(createdAt),
-		...uploadJson,
-	});
+	for (const upload of uploads) {
+		const {
+			secure_url: secureUrl,
+			public_id: publicId,
+			created_at: createdAt,
+			...uploadJson
+		} = upload;
 
-	const createdImage = await Image.create({ ...parsedObject, postId });
+		const parsedObject = uploadWithoutIdSchema.parse({
+			publicId,
+			secureUrl,
+			createdAt: new Date(createdAt),
+			...uploadJson,
+		});
 
-	return createdImage;
+		const createdImage = await Image.create({ ...parsedObject, postId });
+		createdImages.push(createdImage);
+	}
+
+	return createdImages;
 };
 
 export default uploadService;

@@ -10,7 +10,10 @@ const getFollowersUsersService = async (id: number) => {
 
 	const followersIds = checkFollowers.rows.map((row) => row.followerId);
 
-	const followers = await User.findAll({ where: { id: followersIds } });
+	const followers = await User.findAll({
+		limit: 10,
+		where: { id: followersIds },
+	});
 
 	return {
 		count: checkFollowers.count,

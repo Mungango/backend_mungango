@@ -5,37 +5,44 @@ import Image from "../../models/Image";
 import LikesPost from "../../models/likesPost";
 
 import { postUserImageLikeSchema } from "../../schemas/posts.schema";
+import Comment from "../../models/Comment";
 
 const getPostsService = async (id: number) => {
-  const like = await LikesPost.count({
-    where: { ownerId: id, type: "like" },
-  });
+	const like = await LikesPost.count({
+		where: { ownerId: id, type: "like" },
+	});
 
-  const dislike = await LikesPost.count({
-    where: { ownerId: id, type: "dislike" },
-  });
+	const dislike = await LikesPost.count({
+		where: { ownerId: id, type: "dislike" },
+	});
 
-  const retrivedPost = await Post.findOne({
-    where: { id },
-    include: [
-      {
-        model: User,
-        where: { deletedAt: null },
-      },
-      {
-        model: Image,
-      },
-    ],
-  });
+	const comment = await Comment.count({
+		where: {
+			postId: id,
+		},
+	});
 
-  // quando o usuário estiver soft deletado isso vai igual a true
-  if (!retrivedPost) {
-    throw new AppError("Post não encontrado", 404);
-  }
+	const retrivedPost = await Post.findOne({
+		where: { id },
+		include: [
+			{
+				model: User,
+				where: { deletedAt: null },
+			},
+			{
+				model: Image,
+			},
+		],
+	});
 
-  const dataPost = { like, dislike, ...retrivedPost.dataValues };
+	// quando o usuário estiver soft deletado isso vai igual a true
+	if (!retrivedPost) {
+		throw new AppError("Post não encontrado", 404);
+	}
 
-  return postUserImageLikeSchema.parse(dataPost);
+	const dataPost = { like, dislike, comment, ...retrivedPost.dataValues };
+
+	return postUserImageLikeSchema.parse(dataPost);
 };
 
 export default getPostsService;

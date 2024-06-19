@@ -9,11 +9,19 @@ import followUsersService from "../services/users/followers/followUsers.service"
 import unfollowUsersService from "../services/users/followers/unfollowUsers.service";
 import getFollowingUsersService from "../services/users/followers/getFollowingUsers.service";
 import getFollowersUsersService from "../services/users/followers/getFollowersUsers.service";
+import getUsersIdService from "../services/users/getUsersId.service";
 
 const getUsersController = async (req: Request, res: Response) => {
 	const username = req.params.username;
 
 	const retrivedUser = await getUsersService(username);
+
+	return res.status(200).json(retrivedUser);
+};
+
+const getUsersIdController = async (req: Request, res: Response) => {
+	const id = Number(req.params.id);
+	const retrivedUser = await getUsersIdService(id);
 
 	return res.status(200).json(retrivedUser);
 };
@@ -87,6 +95,7 @@ const getFollowersUserController = async (req: Request, res: Response) => {
 
 export {
 	getUsersController,
+	getUsersIdController,
 	getAllUsersController,
 	createUsersController,
 	updateUsersController,

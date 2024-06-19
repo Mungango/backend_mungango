@@ -1,3 +1,4 @@
+import Comment from "../../models/Comment";
 import Image from "../../models/Image";
 import Post from "../../models/Post";
 import User from "../../models/User";
@@ -7,6 +8,7 @@ import { postUserImageLikeSchema } from "../../schemas/posts.schema";
 
 const getAllPostsService = async () => {
 	const retrivedPosts = await Post.findAll({
+		limit: 10,
 		include: [
 			{
 				model: User,
@@ -14,10 +16,11 @@ const getAllPostsService = async () => {
 			},
 			{ model: Image },
 		],
+		order: [["createdAt", "DESC"]],
 	});
 
 	// Para cada post, obtemos as contagens de likes e dislikes
-	const postsWithLikesAndDislikes = await Promise.all(
+	const postsWithLikesDislikesAndComments = await Promise.all(
 		retrivedPosts.map(async (post) => {
 			const like = await LikesPost.count({
 				where: { ownerId: post.dataValues.id, type: "like" },
@@ -27,17 +30,24 @@ const getAllPostsService = async () => {
 				where: { ownerId: post.dataValues.id, type: "dislike" },
 			});
 
+			const comment = await Comment.count({
+				where: {
+					postId: post.dataValues.id,
+				},
+			});
+
 			return {
 				...post.dataValues,
 				like,
 				dislike,
+				comment,
 			};
 		})
 	);
 
 	return postUserImageLikeSchema
 		.array()
-		.parse(postsWithLikesAndDislikes.reverse());
+		.parse(postsWithLikesDislikesAndComments);
 };
 
 export default getAllPostsService;
