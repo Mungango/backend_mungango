@@ -6,6 +6,7 @@ import User from "./User";
 
 class Icon extends Model<iIcon, iIconCreate> {
 	declare id: number;
+	declare name: string;
 	declare publicId: string;
 	declare url: string;
 	declare secureUrl: string;
@@ -15,6 +16,10 @@ class Icon extends Model<iIcon, iIconCreate> {
 Icon.init(
 	{
 		id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+		name: {
+			type: DataTypes.STRING,
+			allowNull: false,
+		},
 		publicId: {
 			type: DataTypes.STRING,
 			allowNull: false,
