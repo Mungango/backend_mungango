@@ -36,8 +36,9 @@ const getAllIconController = async (req: Request, res: Response) => {
 
 const uploadIconPostController = async (req: Request, res: Response) => {
 	const icon = await saveIcon(req.file!.path);
+	const name = req.body.name
 
-	const uploadedIcon = await iconService(icon);
+	const uploadedIcon = await iconService({...icon, name});
 
 	return res.status(200).json(uploadedIcon);
 };
