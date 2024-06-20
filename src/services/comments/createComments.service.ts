@@ -20,7 +20,7 @@ const createCommentsService = async (
 	});
 
 	if (!createComment) {
-		throw new AppError("Não foi possível criar o comentário", 404);
+		throw new AppError("Não foi possível criar o comentário", 500);
 	}
 
 	return commentsSchema.parse(createComment);
