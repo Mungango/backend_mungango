@@ -3,13 +3,13 @@ import createHashtagService from "../services/hashtags/createHashtag.service";
 import getHashtagService from "../services/hashtags/getHashtag.service";
 import getAllHashtagService from "../services/hashtags/getAllHashtag.service";
 
-const createHashtagController = async (req: Request, res: Response) => {
-	const payload = req.body;
+// const createHashtagController = async (req: Request, res: Response) => {
+// 	const payload = req.body;
 
-	const createdHashtag = await createHashtagService(payload);
+// 	const createdHashtag = await createHashtagService(payload);
 
-	return res.status(201).json(createdHashtag);
-};
+// 	return res.status(201).json(createdHashtag);
+// };
 
 const getAllHashtagController = async (req: Request, res: Response) => {
 	const retrivedHashtags = await getAllHashtagService();
@@ -26,7 +26,7 @@ const getHashtagController = async (req: Request, res: Response) => {
 };
 
 export {
-	createHashtagController,
+	// createHashtagController,
 	getAllHashtagController,
 	getHashtagController,
 };

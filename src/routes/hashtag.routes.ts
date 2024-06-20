@@ -3,19 +3,19 @@ import ensureTokenIsValidMiddleware from "../middlewares/ensureTokenIsValid.midd
 import ensureDataIsValidMiddleware from "../middlewares/ensureDataIsValid.middleware";
 import { hashtagCreateSchema } from "../schemas/hashtag.schema";
 import {
-	createHashtagController,
+	// createHashtagController,
 	getAllHashtagController,
 	getHashtagController,
 } from "../controllers/hashtag.controller";
 
 const hashtagRoutes: Router = Router();
 
-hashtagRoutes.post(
-	"",
-	ensureTokenIsValidMiddleware,
-	ensureDataIsValidMiddleware(hashtagCreateSchema),
-	createHashtagController
-);
+// hashtagRoutes.post(
+// 	"",
+// 	ensureTokenIsValidMiddleware,
+// 	ensureDataIsValidMiddleware(hashtagCreateSchema),
+// 	createHashtagController
+// );
 
 hashtagRoutes.get("/:id", getHashtagController);
 

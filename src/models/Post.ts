@@ -4,9 +4,13 @@ import sequelize from "../db/connect";
 import { iPost, iPostCreate } from "../interfaces/post.interface";
 
 import User from "./User";
+import Hashtag from "./Hashtag";
 
 class Post extends Model<iPost, iPostCreate> {
 	declare message: string;
+
+	public addHashtag!: (hashtag: Hashtag) => Promise<void>;
+	public removeHashtag!: (hashtag: Hashtag) => Promise<void>;
 }
 
 // Definindo a tabela de post

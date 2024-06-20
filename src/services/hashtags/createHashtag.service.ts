@@ -1,26 +1,16 @@
 import { AppError } from "../../errors";
 import { iHashtag, iHashtagCreate } from "../../interfaces/hashtag.interface";
+import { iPost } from "../../interfaces/post.interface";
 import Hashtag from "../../models/Hashtag";
+import Post from "../../models/Post";
 import { hashtagSchema } from "../../schemas/hashtag.schema";
 
-const createHashtagService = async (
-	payload: iHashtagCreate
-): Promise<iHashtag> => {
-	const existHashtag = await Hashtag.findOne({where: {name: payload.name}})
+const createHashtagService = async (payload: string[], post: Post) => {
+	payload.forEach(async (hashtag) => {
+		const [retrivedHashtag, created] = await Hashtag.findOrCreate({ where: { name: hashtag } });
+		await post.addHashtag(retrivedHashtag);
 
-	if(existHashtag){
-		return hashtagSchema.parse(existHashtag);
-	}
-
-	const createHashtag = await Hashtag.create({
-		...payload,
 	});
-
-	if (!createHashtag) {
-		throw new AppError("Não foi possível criar a hashtag", 500);
-	}
-
-	return hashtagSchema.parse(createHashtag);
 };
 
 export default createHashtagService;
