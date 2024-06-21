@@ -1,14 +1,15 @@
 import Follower from "../../../models/Follower";
 import User from "../../../models/User";
-import { followersSchema } from "../../../schemas/followers.schema";
 import { usersWithoutPassSchema } from "../../../schemas/users.schema";
 
 const getFollowersUsersService = async (id: number) => {
 	const checkFollowers = await Follower.findAndCountAll({
-		where: { followerId: id },
+		where: {
+			followerId: id,
+		},
 	});
 
-	const followersIds = checkFollowers.rows.map((row) => row.followerId);
+	const followersIds = checkFollowers.rows.map((row) => row.userId);
 
 	const followers = await User.findAll({
 		limit: 10,
