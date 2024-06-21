@@ -3,11 +3,13 @@ import {
 	createUsersController,
 	deleteUsersController,
 	followUserController,
+	forgotPasswordController,
 	getAllUsersController,
 	getFollowersUserController,
 	getFollowingUserController,
 	getUsersController,
 	getUsersIdController,
+	resetPasswordController,
 	unfollowUserController,
 	updateUsersController,
 } from "../controllers/user.controllers";
@@ -80,5 +82,9 @@ userRoutes.delete(
 	ensureTokenIsValidMiddleware,
 	unfollowUserController
 );
+
+userRoutes.post("/request-reset-password", forgotPasswordController);
+
+userRoutes.post("/reset-password/:token", resetPasswordController);
 
 export default userRoutes;

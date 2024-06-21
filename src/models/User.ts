@@ -72,6 +72,14 @@ User.init(
 				len: [6, 120],
 			},
 		},
+		resetPasswordToken: {
+			type: DataTypes.STRING,
+			allowNull: true,
+		},
+		resetPasswordExpires: {
+			type: DataTypes.DATE,
+			allowNull: true,
+		},
 		createdAt: {
 			type: DataTypes.DATE,
 		},
