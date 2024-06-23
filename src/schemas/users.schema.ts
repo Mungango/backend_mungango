@@ -11,18 +11,26 @@ const usersSchema = z.object({
 	phone: z.string().max(11),
 	email: z.string().email().max(55),
 	password: z.string().min(6).max(120),
+	resetPasswordToken: z.string().nullable(),
+	resetPasswordExpires: z.date().nullable(),
 	createdAt: z.date(),
 	updatedAt: z.date(),
 	deletedAt: z.date().nullable(),
 });
 
-const usersWithoutPassSchema = usersSchema.omit({ password: true });
+const usersWithoutPassSchema = usersSchema.omit({
+	password: true,
+	resetPasswordToken: true,
+	resetPasswordExpires: true,
+});
 
 const usersCreateSchema = usersSchema.omit({
 	id: true,
 	createdAt: true,
 	updatedAt: true,
 	deletedAt: true,
+	resetPasswordToken: true,
+	resetPasswordExpires: true,
 });
 
 const usersUpdateSchema = usersCreateSchema.partial();

@@ -11,6 +11,9 @@ import getFollowingUsersService from "../services/users/followers/getFollowingUs
 import getFollowersUsersService from "../services/users/followers/getFollowersUsers.service";
 import getUsersIdService from "../services/users/getUsersId.service";
 
+import forgotPasswordService from "../services/users/forgotPassword.service";
+import resetPasswordService from "../services/users/resetPassword.service";
+
 const getUsersController = async (req: Request, res: Response) => {
 	const username = req.params.username;
 
@@ -93,6 +96,23 @@ const getFollowersUserController = async (req: Request, res: Response) => {
 	return res.status(200).json(userFollowing);
 };
 
+const forgotPasswordController = async (req: Request, res: Response) => {
+	const email: string = req.body.email;
+
+	await forgotPasswordService(email);
+
+	return res.status(200).send("Confere o email, bitch");
+};
+
+const resetPasswordController = async (req: Request, res: Response) => {
+	const { token } = req.params;
+	const { password } = req.body;
+
+	await resetPasswordService(token, password);
+
+	return res.status(200).send("Senha redefinida, bitch");
+};
+
 export {
 	getUsersController,
 	getUsersIdController,
@@ -104,4 +124,6 @@ export {
 	getFollowersUserController,
 	followUserController,
 	unfollowUserController,
+	resetPasswordController,
+	forgotPasswordController,
 };
