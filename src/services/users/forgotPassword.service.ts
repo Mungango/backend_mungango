@@ -29,14 +29,14 @@ const forgotPasswordService = async (email: string) => {
 		port: 587,
 		secure: false, // Use `true` for port 465, `false` for all other ports
 		auth: {
-			user: "pethersonreis@gmail.com",
-			pass: "fkgp uhqv lstn pszx",
+			user: process.env.EMAIL,
+			pass: process.env.EMAIL_PASSWORD,
 		},
 	});
 
 	const mailOptions = {
 		to: email,
-		from: "mungango101@gmail.com",
+		from: process.env.EMAIL,
 		subject: "Recuperação de Senha",
 		text:
 			`Você está recebendo este email porque você (ou alguém) solicitou a redefinição de senha da sua conta no Mungango.\n\n` +
