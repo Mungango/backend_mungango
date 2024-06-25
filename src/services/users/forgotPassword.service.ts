@@ -22,7 +22,7 @@ const forgotPasswordService = async (email: string) => {
 
 	await User.update(payload, { where: { id: user.id } });
 
-	const resetLink = `http://localhost:3000/users/reset-password/${token}`;
+	const resetLink = `http://localhost:3001/reset-password/${token}`;
 
 	const transporter = nodemailer.createTransport({
 		host: "smtp.gmail.com",
@@ -37,7 +37,7 @@ const forgotPasswordService = async (email: string) => {
 	const mailOptions = {
 		to: email,
 		from: process.env.EMAIL,
-		subject: "Recuperação de Senha",
+		subject: "Recuperação de Senha Mungango",
 		text:
 			`Você está recebendo este email porque você (ou alguém) solicitou a redefinição de senha da sua conta no Mungango.\n\n` +
 			`Por favor, clique no seguinte link ou cole no seu navegador para concluir o processo:\n\n` +
