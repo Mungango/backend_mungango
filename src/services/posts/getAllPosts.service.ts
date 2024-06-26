@@ -6,9 +6,11 @@ import LikesPost from "../../models/likesPost";
 
 import { postUserImageLikeSchema } from "../../schemas/posts.schema";
 
-const getAllPostsService = async () => {
+const getAllPostsService = async (page: number, limit: number) => {
+	 const offset = (page - 1) * limit;
 	const retrivedPosts = await Post.findAll({
-		limit: 10,
+		limit,
+		offset,
 		include: [
 			{
 				model: User,

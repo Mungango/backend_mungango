@@ -25,7 +25,10 @@ const getPostsController = async (req: Request, res: Response) => {
 };
 
 const getAllPostsController = async (req: Request, res: Response) => {
-	const allPosts = await getAllPostsService();
+	const { page = 1, limit = 10 } = req.query;
+	const allPosts = await getAllPostsService(Number(page), Number(limit));
+
+	// const allPosts = await getAllPostsService();
 
 	return res.status(200).json(allPosts);
 };
