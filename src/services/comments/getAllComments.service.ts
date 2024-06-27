@@ -6,45 +6,49 @@ import LikesComment from "../../models/likesComment";
 import { commentUserNoUserIdSchema } from "../../schemas/comments.schema";
 
 const getAllCommentsService = async (
-  postId: number
+	postId: number,
+	page: number,
+	limit: number
 ): Promise<iCommentUserNoUserId[]> => {
-  const retrivedComments = await Comment.findAll({
-			limit: 10,
-			where: {
-				postId,
+	const offset = (page - 1) * limit;
+	const retrivedComments = await Comment.findAll({
+		limit,
+		offset,
+		where: {
+			postId,
+		},
+		include: [
+			{
+				model: User,
+				where: { deletedAt: null },
 			},
-			include: [
-				{
-					model: User,
-					where: { deletedAt: null },
-				},
-				{
-					model: Post,
-				},
-			],
-			order: [["createdAt", "DESC"]],
-		});
+			{
+				model: Post,
+			},
+		],
+		order: [["createdAt", "DESC"]],
+	});
 
-  // Para cada post, obtemos as contagens de likes e dislikes
-  const commentsWithLikesAndDislikes = await Promise.all(
-    retrivedComments.map(async (comment) => {
-      const like = await LikesComment.count({
-        where: { ownerId: comment.dataValues.id, type: "like" },
-      });
+	// Para cada post, obtemos as contagens de likes e dislikes
+	const commentsWithLikesAndDislikes = await Promise.all(
+		retrivedComments.map(async (comment) => {
+			const like = await LikesComment.count({
+				where: { ownerId: comment.dataValues.id, type: "like" },
+			});
 
-      const dislike = await LikesComment.count({
-        where: { ownerId: comment.dataValues.id, type: "dislike" },
-      });
+			const dislike = await LikesComment.count({
+				where: { ownerId: comment.dataValues.id, type: "dislike" },
+			});
 
-      return {
-        ...comment.dataValues,
-        like,
-        dislike,
-      };
-    })
-  );
+			return {
+				...comment.dataValues,
+				like,
+				dislike,
+			};
+		})
+	);
 
-  return commentUserNoUserIdSchema.array().parse(commentsWithLikesAndDislikes);
+	return commentUserNoUserIdSchema.array().parse(commentsWithLikesAndDislikes);
 };
 
 export default getAllCommentsService;
