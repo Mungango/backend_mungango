@@ -6,59 +6,61 @@ import LikesComment from "../../models/likesComment";
 import { commentUserNoUserIdSchema } from "../../schemas/comments.schema";
 
 const getAllCommentsService = async (
-  postId: number,
-  page: number,
-  limit: number
+	postId: number,
+	page: number,
+	limit: number
 ) => {
-  const offset = (page - 1) * limit;
-  const retrivedComments = await Comment.findAll({
-    limit,
-    offset,
-    where: {
-      postId,
-    },
-    include: [
-      {
-        model: User,
-        where: { deletedAt: null },
-      },
-      {
-        model: Post,
-      },
-    ],
+	const offset = (page - 1) * limit;
+	const retrivedComments = await Comment.findAll({
+		limit,
+		offset,
+		where: {
+			postId,
+		},
+		include: [
+			{
+				model: User,
+				where: { deletedAt: null },
+			},
+			{
+				model: Post,
+			},
+		],
 
-    order: [["createdAt", "DESC"]],
-  });
+		order: [["createdAt", "DESC"]],
+	});
 
-  // Para cada post, obtemos as contagens de likes e dislikes
-  const commentsWithLikesDislikes = await Promise.all(
-    retrivedComments.map(async (comment) => {
-      const like = await LikesComment.count({
-        where: { ownerId: comment.dataValues.id, type: "like" },
-      });
+	// Para cada post, obtemos as contagens de likes e dislikes
+	const commentsWithLikesDislikes = await Promise.all(
+		retrivedComments.map(async (comment) => {
+			const like = await LikesComment.count({
+				where: { ownerId: comment.dataValues.id, type: "like" },
+			});
 
-      const dislike = await LikesComment.count({
-        where: { ownerId: comment.dataValues.id, type: "dislike" },
-      });
+			const dislike = await LikesComment.count({
+				where: { ownerId: comment.dataValues.id, type: "dislike" },
+			});
 
-      const count = await Comment.count({
-        where: {
-          postId: comment.dataValues.id,
-        },
-      });
+			const raw = {
+				...comment.dataValues,
+				like,
+				dislike,
+			};
 
-      const row = {
-        ...comment.dataValues,
-        like,
-        dislike,
-        count,
-      };
+			return raw;
+		})
+	);
 
-      return row;
-    })
-  );
+	const count = await Comment.count({
+		where: {
+			postId,
+		},
+	});
 
-  return commentUserNoUserIdSchema.array().parse(commentsWithLikesDislikes);
+	return commentUserNoUserIdSchema.parse({
+		count,
+		raw: commentsWithLikesDislikes,
+	});
 };
 
 export default getAllCommentsService;
