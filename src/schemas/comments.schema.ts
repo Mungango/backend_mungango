@@ -18,6 +18,7 @@ const commentUserNoUserIdSchema = commentsSchema
 	.extend({
 		like: z.number(),
 		dislike: z.number(),
+		count: z.number(),
 		User: usersWithoutPassSchema,
 	})
 	.omit({ userId: true });
