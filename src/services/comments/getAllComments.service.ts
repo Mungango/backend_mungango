@@ -47,18 +47,18 @@ const getAllCommentsService = async (
         },
       });
 
-      return {
+      const row = {
         ...comment.dataValues,
         like,
         dislike,
         count,
       };
+
+      return row;
     })
   );
 
-  return commentUserNoUserIdSchema
-    .array()
-    .parse(commentsWithLikesDislikes);
+  return commentUserNoUserIdSchema.array().parse(commentsWithLikesDislikes);
 };
 
 export default getAllCommentsService;
