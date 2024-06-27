@@ -19,7 +19,13 @@ const getCommentsController = async (req: Request, res: Response) => {
 
 const getAllCommentsController = async (req: Request, res: Response) => {
 	const postId = Number(req.params.id);
-	const allComments = await getAllCommentsService(postId);
+	const { page = 1, limit = 10 } = req.query;
+
+	const allComments = await getAllCommentsService(
+		postId,
+		Number(page),
+		Number(limit)
+	);
 
 	return res.status(200).json(allComments);
 };
