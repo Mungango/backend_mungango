@@ -82,8 +82,13 @@ const getLikePostsController = async (req: Request, res: Response) => {
 };
 
 const userPostsController = async (req: Request, res: Response) => {
+	const { page = 1, limit = 10 } = req.query;
 	const userId = Number(req.params.id);
-	const userAllPosts = await getUserAllPostsService(userId);
+	const userAllPosts = await getUserAllPostsService(
+		userId,
+		Number(page),
+		Number(limit)
+	);
 
 	return res.status(200).json(userAllPosts);
 };

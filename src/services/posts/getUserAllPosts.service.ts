@@ -8,9 +8,14 @@ import User from "../../models/User";
 import { iPostUserImageLikeSchema } from "../../interfaces/post.interface";
 
 const getUserAllPostsService = async (
-	id: number
+	id: number,
+	page: number,
+	limit: number
 ): Promise<iPostUserImageLikeSchema[]> => {
+	const offset = (page - 1) * limit;
 	const retrivedPosts = await Post.findAll({
+		limit,
+		offset,
 		include: [
 			{
 				model: User,
