@@ -5,13 +5,13 @@ import LikesPost from "../../models/likesPost";
 
 import { postUserImageLikeSchema } from "../../schemas/posts.schema";
 import User from "../../models/User";
-import { iPostUserImageLikeSchema } from "../../interfaces/post.interface";
+import { iPostUserImageLike } from "../../interfaces/post.interface";
 
 const getUserAllPostsService = async (
 	id: number,
 	page: number,
 	limit: number
-): Promise<iPostUserImageLikeSchema[]> => {
+): Promise<iPostUserImageLike[]> => {
 	const offset = (page - 1) * limit;
 	const retrivedPosts = await Post.findAll({
 		limit,

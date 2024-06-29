@@ -12,6 +12,13 @@ const postsSchema = z.object({
 	userId: z.number(),
 });
 
+const postUserImageSchema = postsSchema
+	.extend({
+		Images: uploadSchema.array(),
+		User: usersWithoutPassSchema,
+	})
+	.omit({ userId: true });
+
 const postUserImageLikeSchema = postsSchema
 	.extend({
 		like: z.number(),
@@ -41,6 +48,7 @@ const postsUpdateSchema = postsCreateSchema.partial();
 export {
 	postsSchema,
 	postUserImageLikeSchema,
+	postUserImageSchema,
 	postsCreateSchema,
 	postsUpdateSchema,
 };

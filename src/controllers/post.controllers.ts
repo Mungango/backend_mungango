@@ -15,6 +15,7 @@ import likeAndDislike from "../middlewares/likeAndDislike.middleware";
 import LikesPost from "../models/likesPost";
 import getUserAllPostsService from "../services/posts/getUserAllPosts.service";
 import getLikePostsService from "../services/posts/getLikePosts.service";
+import getAllFollowingPostsService from "../services/posts/getAllFollowingPosts.service";
 
 const getPostsController = async (req: Request, res: Response) => {
 	const id = Number(req.params.id);
@@ -93,6 +94,14 @@ const userPostsController = async (req: Request, res: Response) => {
 	return res.status(200).json(userAllPosts);
 };
 
+const userFollowPostsController = async (req: Request, res: Response) => {
+	const id = Number(req.params.id);
+
+	const posts = await getAllFollowingPostsService(id);
+
+	return res.status(200).json(posts);
+};
+
 export {
 	getPostsController,
 	getAllPostsController,
@@ -102,4 +111,5 @@ export {
 	getLikePostsController,
 	likePostsController,
 	userPostsController,
+	userFollowPostsController,
 };
