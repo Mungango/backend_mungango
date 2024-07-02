@@ -71,9 +71,12 @@ const getAllFollowingPostsService = async (id: number) => {
 		})
 	);
 
-	return postUserImageLikeSchema
-		.array()
-		.parse(postsWithLikesDislikesAndComments);
+	const postCount = await Post.count();
+
+	return {
+		count: postCount,
+		raw: postsWithLikesDislikesAndComments,
+	};
 };
 
 export default getAllFollowingPostsService;
