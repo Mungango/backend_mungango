@@ -16,6 +16,7 @@ import LikesPost from "../models/likesPost";
 import getUserAllPostsService from "../services/posts/getUserAllPosts.service";
 import getLikePostsService from "../services/posts/getLikePosts.service";
 import getAllFollowingPostsService from "../services/posts/getAllFollowingPosts.service";
+import getAllPostsAdminService from "../services/posts/getAllPostsAdmin.service";
 
 const getPostsController = async (req: Request, res: Response) => {
 	const id = Number(req.params.id);
@@ -102,6 +103,15 @@ const userFollowPostsController = async (req: Request, res: Response) => {
 	return res.status(200).json(posts);
 };
 
+const getAllPostsAdminController = async (req: Request, res: Response) => {
+	console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+	
+	const { page = 1, limit = 10 } = req.query;
+	const allPostsAdmin = await getAllPostsAdminService(Number(page), Number(limit));
+
+	return res.status(200).json(allPostsAdmin);
+};
+
 export {
 	getPostsController,
 	getAllPostsController,
@@ -112,4 +122,5 @@ export {
 	likePostsController,
 	userPostsController,
 	userFollowPostsController,
+	getAllPostsAdminController,
 };

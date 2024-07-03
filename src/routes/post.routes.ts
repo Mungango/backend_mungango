@@ -10,6 +10,7 @@ import {
 	userPostsController,
 	getLikePostsController,
 	userFollowPostsController,
+	getAllPostsAdminController,
 } from "../controllers/post.controllers";
 import ensureExistsMiddleware from "../middlewares/ensureExists.middleware";
 import ensureDataIsValidMiddleware from "../middlewares/ensureDataIsValid.middleware";
@@ -21,6 +22,8 @@ import ensureTokenIsValidMiddleware from "../middlewares/ensureTokenIsValid.midd
 import User from "../models/User";
 
 const postRoutes: Router = Router();
+
+postRoutes.get("/admin", getAllPostsAdminController);
 
 postRoutes.get("", getAllPostsController);
 
