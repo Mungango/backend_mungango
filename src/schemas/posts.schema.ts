@@ -39,19 +39,7 @@ const postsCreateSchema = postsSchema.omit({
 
 const postsUpdateSchema = postsCreateSchema.partial();
 
-const postsActivityUserImageLikeSchema = z
-  .object({ count: z.number() })
-  .extend({
-    rows: postsSchema
-      .extend({
-        Images: uploadSchema.array(),
-        User: usersWithoutPassSchema,
-      })
-      .omit({
-        userId: true,
-      })
-      .array(),
-  });
+
 
 export {
   postsSchema,
@@ -59,5 +47,4 @@ export {
   postUserImageSchema,
   postsCreateSchema,
   postsUpdateSchema,
-  postsActivityUserImageLikeSchema,
 };
