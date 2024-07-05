@@ -27,6 +27,9 @@ const postUserImageLikeSchema = z.object({ count: z.number() }).extend({
       Images: uploadSchema.array(),
       User: usersWithoutPassSchema,
     })
+    .omit({
+      userId: true,
+    })
     .array(),
 });
 
@@ -38,8 +41,6 @@ const postsCreateSchema = postsSchema.omit({
 });
 
 const postsUpdateSchema = postsCreateSchema.partial();
-
-
 
 export {
   postsSchema,

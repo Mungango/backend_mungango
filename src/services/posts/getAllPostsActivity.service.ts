@@ -6,7 +6,6 @@ import Comment from "../../models/Comment";
 import { postUserImageLikeSchema } from "../../schemas/posts.schema";
 import {
   iPostUserImageLike,
-  iPostsActivityUserImageLike,
 } from "../../interfaces/post.interface";
 import LikesPost from "../../models/likesPost";
 import { raw } from "express";
