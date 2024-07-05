@@ -10,7 +10,7 @@ const getAllPostsActivityService = async (page: number, limit: number) =>
   {
     const offset = (page - 1) * limit;
 
-    const retrivedPostsActivity = await Post.findAll({
+    const retrivedPostsActivity = await Post.findAndCountAll({
       limit,
       offset,
       attributes: [
@@ -57,9 +57,7 @@ const getAllPostsActivityService = async (page: number, limit: number) =>
       ],
     });
 
-    return postsActivityUserImageLikeSchema
-      .array()
-      .parse(retrivedPostsActivity);
+    return postsActivityUserImageLikeSchema.parse(retrivedPostsActivity);
   };
 
 export default getAllPostsActivityService;
