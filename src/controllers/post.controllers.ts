@@ -8,8 +8,8 @@ import updatePostsService from "../services/posts/updatePosts.service";
 import likePostsService from "../services/posts/likePosts.service";
 import { iPostCreate, iPostUpdate } from "../interfaces/post.interface";
 import {
-	ilikesPostCreate,
-	ilikesPostUpdate,
+  ilikesPostCreate,
+  ilikesPostUpdate,
 } from "../interfaces/likesPost.interface";
 import likeAndDislike from "../middlewares/likeAndDislike.middleware";
 import LikesPost from "../models/likesPost";
@@ -17,110 +17,123 @@ import getUserAllPostsService from "../services/posts/getUserAllPosts.service";
 import getLikePostsService from "../services/posts/getLikePosts.service";
 import getAllFollowingPostsService from "../services/posts/getAllFollowingPosts.service";
 import getAllPostsAdminService from "../services/posts/getAllPostsAdmin.service";
+import getAllPostsActivityService from "../services/posts/getAllPostsActivity.service";
 
 const getPostsController = async (req: Request, res: Response) => {
-	const id = Number(req.params.id);
+  const id = Number(req.params.id);
 
-	const retrivedPost = await getPostsService(id);
+  const retrivedPost = await getPostsService(id);
 
-	return res.status(200).json(retrivedPost);
+  return res.status(200).json(retrivedPost);
 };
 
 const getAllPostsController = async (req: Request, res: Response) => {
-	const { page = 1, limit = 10 } = req.query;
-	const allPosts = await getAllPostsService(Number(page), Number(limit));
+  const { page = 1, limit = 10 } = req.query;
+  const allPosts = await getAllPostsService(Number(page), Number(limit));
 
-	return res.status(200).json(allPosts);
+  return res.status(200).json(allPosts);
 };
 
 const createPostsController = async (req: Request, res: Response) => {
-	const payload: iPostCreate = req.body,
-		userId = Number(req.user.id);
+  const payload: iPostCreate = req.body,
+    userId = Number(req.user.id);
 
-	const createdPost = await createPostsService(userId, payload);
-	return res.status(201).json(createdPost);
+  const createdPost = await createPostsService(userId, payload);
+  return res.status(201).json(createdPost);
 };
 
 const updatePostsController = async (req: Request, res: Response) => {
-	const payload: iPostUpdate = req.body,
-		id = Number(req.params.id);
-	const userId = Number(req.user.id);
+  const payload: iPostUpdate = req.body,
+    id = Number(req.params.id);
+  const userId = Number(req.user.id);
 
-	const updatedPost = await updatePostsService(id, payload, userId);
+  const updatedPost = await updatePostsService(id, payload, userId);
 
-	return res.status(200).json(updatedPost);
+  return res.status(200).json(updatedPost);
 };
 
 const deletePostsController = async (req: Request, res: Response) => {
-	const id = Number(req.params.id);
-	const userId = Number(req.user.id);
+  const id = Number(req.params.id);
+  const userId = Number(req.user.id);
 
-	await deletePostsService(id, userId);
+  await deletePostsService(id, userId);
 
-	return res.status(204).send();
+  return res.status(204).send();
 };
 
 const likePostsController = async (req: Request, res: Response) => {
-	const payload = req.body;
-	const id = Number(req.params.id);
-	const userId = Number(req.user.id);
+  const payload = req.body;
+  const id = Number(req.params.id);
+  const userId = Number(req.user.id);
 
-	const data: ilikesPostCreate = { ownerId: id, userId, ...payload };
+  const data: ilikesPostCreate = { ownerId: id, userId, ...payload };
 
-	await likeAndDislike(LikesPost, "post", data);
+  await likeAndDislike(LikesPost, "post", data);
 
-	return res.status(204).send();
+  return res.status(204).send();
 };
 
 const getLikePostsController = async (req: Request, res: Response) => {
-	const id = Number(req.params.id);
-	const userId = Number(req.user.id);
+  const id = Number(req.params.id);
+  const userId = Number(req.user.id);
 
-	const data: { ownerId: number; userId: number } = { ownerId: id, userId };
+  const data: { ownerId: number; userId: number } = { ownerId: id, userId };
 
-	const like = await getLikePostsService(data);
+  const like = await getLikePostsService(data);
 
-	return res.status(200).json(like);
+  return res.status(200).json(like);
 };
 
 const userPostsController = async (req: Request, res: Response) => {
-	const { page = 1, limit = 10 } = req.query;
-	const userId = Number(req.params.id);
-	const userAllPosts = await getUserAllPostsService(
-		userId,
-		Number(page),
-		Number(limit)
-	);
+  const { page = 1, limit = 10 } = req.query;
+  const userId = Number(req.params.id);
+  const userAllPosts = await getUserAllPostsService(
+    userId,
+    Number(page),
+    Number(limit)
+  );
 
-	return res.status(200).json(userAllPosts);
+  return res.status(200).json(userAllPosts);
 };
 
 const userFollowPostsController = async (req: Request, res: Response) => {
-	const id = Number(req.params.id);
+  const id = Number(req.params.id);
 
-	const posts = await getAllFollowingPostsService(id);
+  const posts = await getAllFollowingPostsService(id);
 
-	return res.status(200).json(posts);
+  return res.status(200).json(posts);
 };
 
 const getAllPostsAdminController = async (req: Request, res: Response) => {
-	console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-	
-	const { page = 1, limit = 10 } = req.query;
-	const allPostsAdmin = await getAllPostsAdminService(Number(page), Number(limit));
+  const { page = 1, limit = 20 } = req.query;
+  const allPostsAdmin = await getAllPostsAdminService(
+    Number(page),
+    Number(limit)
+  );
 
-	return res.status(200).json(allPostsAdmin);
+  return res.status(200).json(allPostsAdmin);
+};
+
+const getAllPostsActivityController = async (req: Request, res: Response) => {
+  const { page = 1, limit = 20 } = req.query;
+  const postsActivity = await getAllPostsActivityService(
+    Number(page),
+    Number(limit)
+  );
+
+  return res.status(200).json(postsActivity);
 };
 
 export {
-	getPostsController,
-	getAllPostsController,
-	createPostsController,
-	updatePostsController,
-	deletePostsController,
-	getLikePostsController,
-	likePostsController,
-	userPostsController,
-	userFollowPostsController,
-	getAllPostsAdminController,
+  getPostsController,
+  getAllPostsController,
+  createPostsController,
+  updatePostsController,
+  deletePostsController,
+  getLikePostsController,
+  likePostsController,
+  userPostsController,
+  userFollowPostsController,
+  getAllPostsAdminController,
+  getAllPostsActivityController,
 };
