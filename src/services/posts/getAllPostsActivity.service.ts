@@ -5,8 +5,8 @@ import Image from "../../models/Image";
 import { postsActivityUserImageLikeSchema } from "../../schemas/posts.schema";
 import { iPostsActivityUserImageLike } from "../../interfaces/post.interface";
 
-const getAllPostsActivityService = async (page: number, limit: number) =>
-  // : Promise<iPostsActivityUserImageLike[]>
+const getAllPostsActivityService = async (page: number, limit: number): Promise<iPostsActivityUserImageLike> =>
+ 
   {
     const offset = (page - 1) * limit;
 
@@ -15,7 +15,8 @@ const getAllPostsActivityService = async (page: number, limit: number) =>
       offset,
       attributes: [
         "id",
-        "message",
+        "message","createdAt",
+        "updatedAt",
         [
           sequelize.literal(`(
           SELECT COUNT(*)

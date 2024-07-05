@@ -48,8 +48,6 @@ const postsActivityUserImageLikeSchema = z
         User: usersWithoutPassSchema,
       })
       .omit({
-        createdAt: true,
-        updatedAt: true,
         userId: true,
       })
       .array(),
