@@ -7,6 +7,7 @@ import {
 	getAllUsersController,
 	getFollowersUserController,
 	getFollowingUserController,
+	getIfUserFollowController,
 	getUsersController,
 	getUsersIdController,
 	resetPasswordController,
@@ -54,6 +55,12 @@ userRoutes.delete(
 	"/:id",
 	ensureExistsMiddleware(User, "Usuário"),
 	deleteUsersController
+);
+
+// Check if user follow a specific user
+userRoutes.get(
+	"/check/isfollow",
+	getIfUserFollowController
 );
 
 // User Follower Routes

@@ -13,6 +13,8 @@ import getUsersIdService from "../services/users/getUsersId.service";
 
 import forgotPasswordService from "../services/users/forgotPassword.service";
 import resetPasswordService from "../services/users/resetPassword.service";
+import getIfUserFollowService from "../services/users/followers/getIfUserFollow.service";
+import { z } from "zod";
 
 const getUsersController = async (req: Request, res: Response) => {
 	const username = req.params.username;
@@ -80,6 +82,24 @@ const unfollowUserController = async (req: Request, res: Response) => {
 	return res.status(204).send();
 };
 
+const getIfUserFollowSchema = z.object({
+	followerId: z.number(),
+	userId: z.number(),
+});
+
+const getIfUserFollowController = async (req: Request, res: Response) => {
+	const {followerId, userId} = req.query;
+
+	const parsedPayload = getIfUserFollowSchema.parse({
+		followerId: Number(followerId),
+		userId: Number(userId),
+	});
+
+	const userFollowing = await getIfUserFollowService(parsedPayload);
+
+	return res.status(200).json(userFollowing);
+};
+
 const getFollowingUserController = async (req: Request, res: Response) => {
 	const id = Number(req.params.id);
 
@@ -120,6 +140,7 @@ export {
 	createUsersController,
 	updateUsersController,
 	deleteUsersController,
+	getIfUserFollowController,
 	getFollowingUserController,
 	getFollowersUserController,
 	followUserController,
