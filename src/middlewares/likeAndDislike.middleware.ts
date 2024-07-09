@@ -43,4 +43,5 @@ const likeAndDislike = async (
 		);
 	}
 };
+
 export default likeAndDislike;

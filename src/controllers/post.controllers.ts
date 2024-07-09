@@ -18,6 +18,8 @@ import getLikePostsService from "../services/posts/getLikePosts.service";
 import getAllFollowingPostsService from "../services/posts/getAllFollowingPosts.service";
 import getAllPostsAdminService from "../services/posts/getAllPostsAdmin.service";
 import getAllPostsActivityService from "../services/posts/getAllPostsActivity.service";
+import getLikeTypePostAndCommentService from "../services/gerais/getLikeTypePostAndComment.service";
+import Post from "../models/Post";
 
 const getPostsController = async (req: Request, res: Response) => {
   const id = Number(req.params.id);
@@ -124,6 +126,20 @@ const getAllPostsActivityController = async (req: Request, res: Response) => {
   return res.status(200).json(postsActivity);
 };
 
+const getLikeTypePostController = async (
+  req: Request,
+  res: Response
+) => {
+  const payload = {
+    userId: Number(req.user.id),
+    ownerId: Number(req.params.id), // Id do post
+  };
+
+  const likeType = await getLikeTypePostAndCommentService(LikesPost, payload);
+
+  return res.status(200).json(likeType);
+};
+
 export {
   getPostsController,
   getAllPostsController,
@@ -136,4 +152,5 @@ export {
   userFollowPostsController,
   getAllPostsAdminController,
   getAllPostsActivityController,
+  getLikeTypePostController,
 };

@@ -12,6 +12,7 @@ import {
   userFollowPostsController,
   getAllPostsAdminController,
   getAllPostsActivityController,
+  getLikeTypePostController,
 } from "../controllers/post.controllers";
 import ensureExistsMiddleware from "../middlewares/ensureExists.middleware";
 import ensureDataIsValidMiddleware from "../middlewares/ensureDataIsValid.middleware";
@@ -21,8 +22,16 @@ import { postsCreateSchema, postsUpdateSchema } from "../schemas/posts.schema";
 import Post from "../models/Post";
 import ensureTokenIsValidMiddleware from "../middlewares/ensureTokenIsValid.middleware";
 import User from "../models/User";
+import LikesPost from "../models/likesPost";
 
 const postRoutes: Router = Router();
+
+postRoutes.get(
+  "/liketype/:id",
+  ensureExistsMiddleware(Post, "Post"),
+  ensureTokenIsValidMiddleware,
+  getLikeTypePostController
+);
 
 postRoutes.get("/admin", getAllPostsAdminController);
 

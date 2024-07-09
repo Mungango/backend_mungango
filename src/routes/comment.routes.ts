@@ -7,6 +7,7 @@ import {
   getCommentsController,
   updateCommentsController,
   likeCommentsController,
+  getLikeTypeCommentController,
 } from "../controllers/comments.controllers";
 import ensureExistsMiddleware from "../middlewares/ensureExists.middleware";
 import ensureDataIsValidMiddleware from "../middlewares/ensureDataIsValid.middleware";
@@ -21,6 +22,13 @@ import ensureTokenIsValidMiddleware from "../middlewares/ensureTokenIsValid.midd
 import Post from "../models/Post";
 
 const commentsRoutes: Router = Router();
+
+commentsRoutes.get(
+  "/liketype/:id",
+  ensureExistsMiddleware(Comment, "Comment"),
+  ensureTokenIsValidMiddleware,
+  getLikeTypeCommentController
+);
 
 commentsRoutes.get("/all/:id", getAllCommentsController);
 
