@@ -11,11 +11,8 @@ const getLikeTypePostAndCommentService = async (
       where: { ownerId: payload.ownerId, userId: payload.userId },
     });
 
-    if (likeType) {
       return geralLikesPostCommentSchemaWithout.parse(likeType);
-    } else {
-      return;
-    }
+   
   } catch (error) {
     console.error(error);
     throw new AppError(

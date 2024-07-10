@@ -75,7 +75,7 @@ const likeCommentsController = async (req: Request, res: Response) => {
 const getLikeTypeCommentController = async (req: Request, res: Response) => {
   const payload = {
     userId: Number(req.user.id),
-    ownerId: Number(req.params.id), // Id do post
+    ownerId: Number(req.params.id), // Id do comment
   };
 
   const likeType = await getLikeTypePostAndCommentService(LikesComment, payload);
