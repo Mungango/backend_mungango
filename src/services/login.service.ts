@@ -32,7 +32,7 @@ const loginService = async (loginDate: iLogin) => {
 	// Se precisar de um payload colcoar antes do process.env
 	//{ admin: user.admin }
 	const token = jwt.sign({ role: user.role }, process.env.SECRET_KEY!, {
-		expiresIn: "72h",
+		// expiresIn: "72h",
 		subject: user.id.toString(),
 	});
 
