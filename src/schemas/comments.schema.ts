@@ -14,13 +14,19 @@ const commentUserSchema = commentsSchema.extend({
 	User: usersWithoutPassSchema,
 });
 
-const commentUserNoUserIdSchema = commentsSchema
-	.extend({
-		like: z.number(),
-		dislike: z.number(),
-		User: usersWithoutPassSchema,
+const commentUserNoUserIdSchema = z
+	.object({
+		count: z.number(),
 	})
-	.omit({ userId: true });
+	.extend({
+		raw: commentsSchema
+			.extend({
+				like: z.number(),
+				dislike: z.number(),
+				User: usersWithoutPassSchema,
+			})
+			.array(),
+	});
 
 const commentsCreateSchema = commentsSchema.omit({
 	id: true,

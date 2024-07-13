@@ -3,7 +3,6 @@ import User from "../../models/User";
 import { usersWithoutPassSchema } from "../../schemas/users.schema";
 import { AppError } from "../../errors";
 import {
-	iUser,
 	iUserUpdate,
 	iUsersWithoutPass,
 } from "../../interfaces/user.interface";

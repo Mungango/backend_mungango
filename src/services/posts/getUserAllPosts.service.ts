@@ -5,12 +5,18 @@ import LikesPost from "../../models/likesPost";
 
 import { postUserImageLikeSchema } from "../../schemas/posts.schema";
 import User from "../../models/User";
-import { iPostUserImageLikeSchema } from "../../interfaces/post.interface";
+import { iPostUserImageLike } from "../../interfaces/post.interface";
+import { raw } from "express";
 
 const getUserAllPostsService = async (
-	id: number
-): Promise<iPostUserImageLikeSchema[]> => {
+	id: number,
+	page: number,
+	limit: number
+): Promise<iPostUserImageLike> => {
+	const offset = (page - 1) * limit;
 	const retrivedPosts = await Post.findAll({
+		limit,
+		offset,
 		include: [
 			{
 				model: User,
@@ -45,9 +51,14 @@ const getUserAllPostsService = async (
 		})
 	);
 
-	return postUserImageLikeSchema
-		.array()
-		.parse(postsWithLikesAndDislikesAndComment);
+	const count = await Post.count({ where: { userId: id } });
+
+	const postUserImageLikesCount = {
+		count,
+		raw: postsWithLikesAndDislikesAndComment,
+	};
+
+	return postUserImageLikeSchema.parse(postUserImageLikesCount);
 };
 
 export default getUserAllPostsService;

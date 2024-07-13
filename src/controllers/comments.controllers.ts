@@ -8,6 +8,7 @@ import { iCommentCreateNoIDs } from "../interfaces/comment.interface";
 import likeAndDislike from "../middlewares/likeAndDislike.middleware";
 import LikesComment from "../models/likesComment";
 import { ilikesCommentCreate } from "../interfaces/likesComment.interface";
+import getLikeTypePostAndCommentService from "../services/gerais/getLikeTypePostAndComment.service";
 
 const getCommentsController = async (req: Request, res: Response) => {
 	const id = Number(req.params.id);
@@ -19,7 +20,13 @@ const getCommentsController = async (req: Request, res: Response) => {
 
 const getAllCommentsController = async (req: Request, res: Response) => {
 	const postId = Number(req.params.id);
-	const allComments = await getAllCommentsService(postId);
+	const { page = 1, limit = 10 } = req.query;
+
+	const allComments = await getAllCommentsService(
+		postId,
+		Number(page),
+		Number(limit)
+	);
 
 	return res.status(200).json(allComments);
 };
@@ -64,11 +71,24 @@ const likeCommentsController = async (req: Request, res: Response) => {
 	return res.status(204).send();
 };
 
+
+const getLikeTypeCommentController = async (req: Request, res: Response) => {
+  const payload = {
+    userId: Number(req.user.id),
+    ownerId: Number(req.params.id), // Id do comment
+  };
+
+  const likeType = await getLikeTypePostAndCommentService(LikesComment, payload);
+
+  return res.status(200).json(likeType);
+};
+
 export {
-	getCommentsController,
-	getAllCommentsController,
-	createCommentsController,
-	updateCommentsController,
-	deleteCommentsController,
-	likeCommentsController,
+  getCommentsController,
+  getAllCommentsController,
+  createCommentsController,
+  updateCommentsController,
+  deleteCommentsController,
+  likeCommentsController,
+  getLikeTypeCommentController,
 };
