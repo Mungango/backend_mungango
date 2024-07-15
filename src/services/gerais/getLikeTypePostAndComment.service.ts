@@ -11,7 +11,7 @@ const getLikeTypePostAndCommentService = async (
 	});
 
   if(!likeType){
-    return "bitch"
+    return ""
   }
 
 	return geralLikesPostCommentSchemaWithout.parse(likeType);
