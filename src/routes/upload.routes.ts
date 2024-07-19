@@ -20,7 +20,7 @@ uploadRoutes.post(
 	uploadImagePostController
 );
 
-uploadRoutes.post("", upload.array("images"), uploadImageController);
+uploadRoutes.post("", upload.single("image"), uploadImageController);
 
 uploadRoutes.delete("/:resource_type", async (req, res) => {
 	await v2.uploader.destroy(req.params.resource_type);

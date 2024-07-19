@@ -1,4 +1,8 @@
-import { v2 as cloudinary } from "cloudinary";
+import {
+	v2 as cloudinary,
+	UploadApiErrorResponse,
+	UploadApiResponse,
+} from "cloudinary";
 import fs from "fs";
 import uploadService from "../services/upload.service";
 import { uploadWithoutIdSchema } from "../schemas/upload.schema";
@@ -48,20 +52,34 @@ const uploadImagePostController = async (req: Request, res: Response) => {
 
 const uploadImageController = async (req: Request, res: Response) => {
 	try {
-		const uploads: any = await saveImages(req.files as Express.Multer.File[]);
+		// o path da imagem está vindo do body
 
-		const parsedUploads = uploads.map((upload: any) => {
-			return uploadWithoutIdSchema.parse({
-				publicId: upload.public_id,
-				secureUrl: upload.secure_url,
-				createdAt: new Date(upload.created_at),
-				...upload,
-			});
+		console.log(req.body.image);
+
+		const upload = await cloudinary.uploader.upload(
+			req.body.image,
+			(
+				error: UploadApiErrorResponse | undefined,
+				result: UploadApiResponse | undefined
+			) => result
+		);
+
+		fs.unlink(req.body.image, (error) => {
+			if (error) {
+				console.log(error);
+			}
 		});
 
-		return res.status(200).json(parsedUploads);
+		const parsedUpload = uploadWithoutIdSchema.parse({
+			publicId: upload.public_id,
+			secureUrl: upload.secure_url,
+			createdAt: new Date(upload.created_at),
+			...upload,
+		});
+
+		return res.status(200).json(parsedUpload);
 	} catch (error) {
-		return res.status(500).json({ error: "Error uploading images" });
+		return res.status(500).json({ error: "Error uploading image" });
 	}
 };
 
