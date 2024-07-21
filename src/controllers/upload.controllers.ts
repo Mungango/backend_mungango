@@ -53,18 +53,12 @@ const uploadImagePostController = async (req: Request, res: Response) => {
 const uploadImageController = async (req: Request, res: Response) => {
 	try {
 		// o path da imagem está vindo do body
-
-		console.log(req.body.image);
-
 		const upload = await cloudinary.uploader.upload(
-			req.body.image,
-			(
-				error: UploadApiErrorResponse | undefined,
-				result: UploadApiResponse | undefined
-			) => result
+			req.file!.path,
+			(error, result) => result
 		);
 
-		fs.unlink(req.body.image, (error) => {
+		fs.unlink(req.file!.path, (error) => {
 			if (error) {
 				console.log(error);
 			}
