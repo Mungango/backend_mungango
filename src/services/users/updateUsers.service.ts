@@ -13,12 +13,14 @@ const updateUsersService = async (
 	payload: iUserUpdate
 ): Promise<iUsersWithoutPass> => {
 	// Verificar se o username já está em uso por outro usuário
-	const existingUser = await User.findOne({
-		where: { username: payload.username, id: { [Op.ne]: id } },
-	});
+	if (payload.username) {
+		const existingUser = await User.findOne({
+			where: { username: payload.username, id: { [Op.ne]: id } },
+		});
 
-	if (existingUser) {
-		throw new AppError("Username não disponível", 400);
+		if (existingUser) {
+			throw new AppError("Username não disponível", 400);
+		}
 	}
 
 	const afterUser = await User.findOne({ where: { id } }),
@@ -35,7 +37,6 @@ const updateUsersService = async (
 
 	await User.update(payload, {
 		where: { id, deletedAt: null },
-		individualHooks: true,
 	});
 
 	const updatedUser = await User.findOne({ where: { id } });
