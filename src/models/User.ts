@@ -14,6 +14,7 @@ class User extends Model<iUser, iUserCreate> {
 	declare image: string | null;
 	declare phone: string;
 	declare email: string;
+	declare isTermAccepted: boolean;
 	declare password: string;
 	declare deletedAt: Date | null;
 }
@@ -64,6 +65,10 @@ User.init(
 			validate: {
 				isEmail: true,
 			},
+		},
+		isTermAccepted: {
+			type: DataTypes.BOOLEAN,
+			defaultValue: false,
 		},
 		password: {
 			type: DataTypes.STRING,

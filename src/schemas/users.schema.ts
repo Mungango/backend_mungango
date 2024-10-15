@@ -11,6 +11,7 @@ const usersSchema = z.object({
 	phone: z.string().max(11),
 	email: z.string().email().max(55),
 	password: z.string().min(6).max(120),
+	isTermAccepted: z.boolean().default(false),
 	resetPasswordToken: z.string().nullable(),
 	resetPasswordExpires: z.date().nullable(),
 	createdAt: z.date(),
